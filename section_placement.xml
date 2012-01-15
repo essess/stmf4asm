@@ -1,0 +1,43 @@
+<!DOCTYPE Linker_Placement_File>
+<Root name="FLASH Section Placement">
+  <MemorySegment name="FLASH">
+    <ProgramSection alignment="0x100" load="Yes" name=".vectors" inputsections="*(.vectors .vectors.*)" start="$(FLASH_START:)"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".init" inputsections="*(.init .init.*)"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".text" inputsections="*(.text .text.* .glue_7t .glue_7 .gnu.linkonce.t.* .gcc_except_table)"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".dtors" inputsections="KEEP (*(SORT(.dtors.*))) KEEP (*(.dtors))"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".ctors" inputsections="KEEP (*(SORT(.ctors.*))) KEEP (*(.ctors))"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".rodata" inputsections="*(.rodata .rodata.* .gnu.linkonce.r.*)"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".data" inputsections="*(.data .data.* .gnu.linkonce.d.*)" runin=".data_run"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".bitband.data" inputsections="*(.bitband.data .bitband.data.*)" runin=".bitband_data_run"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".sram1.data" inputsections="*(.sram1.data .sram1.data.*)" runin=".sram1_data_run"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".sram2.data" inputsections="*(.sram2.data .sram2.data.*)" runin=".sram2_data_run"/>        
+    <ProgramSection alignment="0x4"   load="Yes" name=".fast" inputsections="*(.fast .fast.*)" runin=".fast_run"/>
+    <ProgramSection alignment="0x4"   load="Yes" name=".tdata" inputsections="*(.tdata .tdata.*)" runin=".tdata_run"/>
+  </MemorySegment>
+  <MemorySegment name="SRAM1">
+    <ProgramSection alignment="0x100" load="No" name=".vectors_ram" start="$(RAM_START:)"/>
+    <ProgramSection alignment="0x4"   load="No" name=".bitband.bss" inputsections="*(.bitband.bss .bitband.bss.*)"/>
+    <ProgramSection alignment="0x4"   load="No" name=".bitband_data_run"/>
+    <ProgramSection alignment="0x4"   load="No" name=".sram1.noinit" inputsections="*(.sram1.noinit .sram1.noinit.*)"/>
+    <ProgramSection alignment="0x4"   load="No" name=".sram1_data_run"/>
+    <ProgramSection alignment="0x4"   load="No" name=".fast_run"/>
+    <ProgramSection alignment="0x4"   load="No" name=".tbss" inputsections="*(.tbss .tbss.*)"/>
+    <ProgramSection alignment="0x4"   load="No" name=".tdata_run"/>
+  </MemorySegment>
+  <MemorySegment name="SRAM2">
+    <ProgramSection alignment="0x4" load="No" name=".sram2.noinit" inputsections="*(.sram2.noinit .sram2.noinit.*)"/>
+    <ProgramSection alignment="0x4" load="No" name=".sram2_data_run"/>
+  </MemorySegment>
+  <MemorySegment name="BKPSRAM">
+    <ProgramSection alignment="0x4" load="No" name=".nvram.noinit" inputsections="*(.nvram.noinit .nvram.noinit.*)"/>
+  </MemorySegment>
+  <MemorySegment name="TCM">
+    <ProgramSection alignment="0x4" load="No" name=".data_run"/>
+    <ProgramSection alignment="0x4" load="No" name=".bss" inputsections="*(.bss .bss.* .gnu.linkonce.b.*) *(COMMON)"/>
+    <ProgramSection alignment="0x4" load="No" name=".non_init" inputsections="*(.non_init .non_init.*)"/>
+    <ProgramSection alignment="0x4" load="No" name=".noinit" inputsections="*(.noinit .noinit.*)"/>
+    <ProgramSection alignment="0x4" load="No" name=".heap" size="__HEAPSIZE__"/>
+    <ProgramSection alignment="0x4" load="No" name=".stack" size="__STACKSIZE__"/>
+    <ProgramSection alignment="0x4" load="No" name=".stack_process" size="__STACKSIZE_PROCESS__"/>
+  </MemorySegment>
+</Root>

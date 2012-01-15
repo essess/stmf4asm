@@ -1,0 +1,5 @@
+syntax: glob
+*.hzs
+*.bak
+THUMB Debug
+THUMB Release
