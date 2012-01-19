@@ -7,6 +7,18 @@
     .type       reset, function
     .global     reset
 reset:
+
+    // 16mhz IRC now active, go get on the pll and jack it up to 168!
+
+#   bl  pll     @ fire up pll and
+
+
+
+
+
+
+
+
 # loadup ram vectors
   ldr r0, =__flash.vectors_load_start__
   ldr r1, =__flash.vectors_load_end__
