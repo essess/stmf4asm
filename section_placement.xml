@@ -1,7 +1,7 @@
 <!DOCTYPE Linker_Placement_File>
 <Root name="FLASH Section Placement">
   <MemorySegment name="FLASH">
-    <ProgramSection alignment="0x100" load="Yes" name=".vectors" inputsections="*(.vectors .vectors.*)" start="$(FLASH_START:)"/>
+    <ProgramSection alignment="0x100" load="Yes" name=".flash.vectors" inputsections="*(.flash.vectors .flash.vectors.*)" start="$(FLASH_START:)"/>
     <ProgramSection alignment="0x4"   load="Yes" name=".init" inputsections="*(.init .init.*)"/>
     <ProgramSection alignment="0x4"   load="Yes" name=".text" inputsections="*(.text .text.* .glue_7t .glue_7 .gnu.linkonce.t.* .gcc_except_table)"/>
     <ProgramSection alignment="0x4"   load="Yes" name=".dtors" inputsections="KEEP (*(SORT(.dtors.*))) KEEP (*(.dtors))"/>
@@ -15,7 +15,7 @@
     <ProgramSection alignment="0x4"   load="Yes" name=".tdata" inputsections="*(.tdata .tdata.*)" runin=".tdata_run"/>
   </MemorySegment>
   <MemorySegment name="SRAM1">
-    <ProgramSection alignment="0x100" load="No" name=".vectors_ram" start="$(RAM_START:)"/>
+    <ProgramSection alignment="0x100" load="No" name=".ram.vectors" inputsections="*(.ram.vectors .ram.vectors.*)" start="$(RAM_START:)"/>
     <ProgramSection alignment="0x4"   load="No" name=".bitband.bss" inputsections="*(.bitband.bss .bitband.bss.*)"/>
     <ProgramSection alignment="0x4"   load="No" name=".bitband_data_run"/>
     <ProgramSection alignment="0x4"   load="No" name=".sram1.noinit" inputsections="*(.sram1.noinit .sram1.noinit.*)"/>
