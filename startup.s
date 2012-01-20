@@ -3,20 +3,17 @@
     .syntax     unified
     .thumb
 
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
     .type       reset, function
     .global     reset
 reset:
+    bl          pll_init            /**< fire up pll to 168MHz               */
 
-    // 16mhz IRC now active, go get on the pll and jack it up to 168!
-
-#   bl  pll     @ fire up pll and
-
+// TODO: future: if proccess stack is != 0 then go ahead and set it up
 
 
 
-
-
+/**< comment */
 
 
 # loadup ram vectors
@@ -32,6 +29,7 @@ reset:
 1:
 # TODO: setup vtor
 
+# TODO: setup process stack if size > 0
 
 # double check - stack should be as on reset.
     b           main
@@ -39,5 +37,4 @@ reset:
     maybe do a bl here, and upon return
     do a hard reset, bkpt, or wfi
 */
-    .pool
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
