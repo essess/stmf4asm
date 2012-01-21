@@ -7,7 +7,7 @@
 __flash_vectors_start:              /* description                           */
     .word       __stack_end__       /**< inital msp value                    */
     .word       reset               /**< reset                               */
-    .word       nmi                 /**< nmi                                 */
+    .word       nmi                 /**< nmi, css                            */
     .word       hflt                /**< hard fault                          */
     .word       memmng              /**< mem manager                         */
     .word       busfault            /**< bus fault                           */
