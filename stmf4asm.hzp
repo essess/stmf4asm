@@ -6,7 +6,7 @@
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc"/>
       <file file_name="vectors.s">
-        <configuration Name="Common" asm_additional_options=""/>
+        <configuration Name="Common" c_preprocessor_definitions="ENB_RAM_VECTORS"/>
       </file>
       <file file_name="startup.s"/>
       <file file_name="main.s"/>
