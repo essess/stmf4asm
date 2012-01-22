@@ -8,6 +8,8 @@
     .set    RCC_CR,                 0x40023800
     .set    RCC_CR_OFFSET,          RCC_CR - RCC_BASE
     .set    HSEON,                  (1<<16)
+    .set    PLLON,                  (1<<24)
+    .set    PLLRDY,                 (1<<25)
 
 # -- PLLCFGR ------------------------------------------------------------------
     .set    RCC_PLLCFGR,            0x40023804

@@ -1,9 +1,9 @@
 # -----------------------------------------------------------------------------
-    .section    .flash.vectors, "a"
+    .section    .flash_vectors, "a"
     .global     __flash_vectors_start
     .global     __flash_vectors_end
     .global     __flash_vectors_size
-
+    .global     __flash_vectors_word_size
 __flash_vectors_start:              /* description                           */
     .word       __stack_end__       /**< inital msp value                    */
     .word       reset               /**< reset                               */
@@ -103,26 +103,29 @@ __flash_vectors_start:              /* description                           */
     .word       crypg               /**< CRYP global int                     */
     .word       hashrng             /**< hash and RNG int                    */
     .word       fpug                /**< FPU global int                      */
-
 __flash_vectors_end:
     .set        __flash_vectors_size, . - __flash_vectors_start
+    .set        __flash_vectors_word_size, __flash_vectors_size/4
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-    .section    .ram.vectors, "a"
+
+#ifdef RAM_VECTORS
+    .section    .ram_vectors, "a"
     .global     __ram_vectors_start
     .global     __ram_vectors_end
     .global     __ram_vectors_size
-
+    .global     __ram_vectors_word_size
 __ram_vectors_start:
     .skip       __flash_vectors_size    /**< reserve space for later copy  */
-__ram_vectors_end:
+__ram_vectors_end:                      /*   via load_ram_vectors          */
     .set        __ram_vectors_size, . - __ram_vectors_start
+    .set        __ram_vectors_word_size, __ram_vectors_size/4
+#endif
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
     .section    .init, "ax"
-    .global     defhnd
     .syntax     unified
     .thumb
 
@@ -490,6 +493,7 @@ hashrng:                            /**< fall through to defhnd              */
     .weak       fpug                /**< override as desired                 */
 fpug:                               /**< fall through to defhnd              */
 
+    .global     defhnd
     .type       defhnd, function    /*                                       */
 defhnd:                             /*                                       */
     bkpt        #0                  /*                                       */
