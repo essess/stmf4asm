@@ -7,12 +7,14 @@
     .type       main, function
     .global     main
 main:
-    /*
+    /* r4 has the results of the pll lock */
 
-    r4 has the results of the pll lock
+// start setting up fs usb for cdc usage .. using bulk xfers
+// then hook up one-wire temp to dump out virtual com
+// see what comes out on generic terminal.
+// then try to get a HS usb phy going and hit 54 MB/s!
 
-    TODO: pipe out sysclk through mco and verify that it is 168/4 = 42MHZ
 
-    */
     bkpt        #0                  /**< hang                                */
+    .size       main, .-main
 # -----------------------------------------------------------------------------
