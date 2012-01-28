@@ -1,9 +1,12 @@
 # -----------------------------------------------------------------------------
     .section    .flash_vectors, "a"
+    .global     __flash_vectors
+    .type       __flash_vectors, object
     .global     __flash_vectors_start
     .global     __flash_vectors_end
     .global     __flash_vectors_size
     .global     __flash_vectors_word_size
+__flash_vectors:
 __flash_vectors_start:              /* description                           */
     .word       __stack_end__       /**< inital msp value                    */
     .word       reset               /**< reset                               */
@@ -88,7 +91,7 @@ __flash_vectors_start:              /* description                           */
     .word       can2rx0             /**< CAN2 RX0                            */
     .word       can2rx1             /**< CAN2 RX1                            */
     .word       can2sce             /**< CAN2 SCE                            */
-    .word       otgfs               /**< OTG FS global int                   */
+    .word       otgfsg              /**< OTG FS global int                   */
     .word       dma2stream5         /**< DMA2 Stream5 global int             */
     .word       dma2stream6         /**< DMA2 Stream6 global int             */
     .word       dma2stream7         /**< DMA2 Stream7 global int             */
@@ -106,21 +109,25 @@ __flash_vectors_start:              /* description                           */
 __flash_vectors_end:
     .set        __flash_vectors_size, . - __flash_vectors_start
     .set        __flash_vectors_word_size, __flash_vectors_size/4
+    .size       __flash_vectors, __flash_vectors_size
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-
 #ifdef RAM_VECTORS
     .section    .ram_vectors, "a"
+    .global     __ram_vectors
+    .type       __ram_vectors, object
     .global     __ram_vectors_start
     .global     __ram_vectors_end
     .global     __ram_vectors_size
     .global     __ram_vectors_word_size
+__ram_vectors:
 __ram_vectors_start:
     .skip       __flash_vectors_size    /**< reserve space for later copy  */
 __ram_vectors_end:                      /*   via load_ram_vectors          */
     .set        __ram_vectors_size, . - __ram_vectors_start
     .set        __ram_vectors_word_size, __ram_vectors_size/4
+    .size       __ram_vectors, __ram_vectors_size
 #endif
 # -----------------------------------------------------------------------------
 
@@ -129,373 +136,282 @@ __ram_vectors_end:                      /*   via load_ram_vectors          */
     .syntax     unified
     .thumb
 
-    .type       nmi, function       /*                                       */
-    .weak       nmi                 /**< override as desired                 */
-nmi:                                /**< fall through to defhnd              */
-
-    .type       hflt, function      /*                                       */
-    .weak       hflt                /**< override as desired                 */
-hflt:                               /**< fall through to defhnd              */
-
-    .type       memmng, function    /*                                       */
-    .weak       memmng              /**< override as desired                 */
-memmng:                             /**< fall through to defhnd              */
-
-    .type       busfault, function  /*                                       */
-    .weak       busfault            /**< override as desired                 */
-busfault:                           /**< fall through to defhnd              */
-
-    .type       usagefault, function /*                                      */
-    .weak       usagefault           /**< override as desired                */
-usagefault:                          /**< fall through to defhnd             */
-
-    .type       svccall, function   /*                                       */
-    .weak       svccall             /**< override as desired                 */
-svccall:                            /**< fall through to defhnd              */
-
-    .type       dbgmon, function    /*                                       */
-    .weak       dbgmon              /**< override as desired                 */
-dbgmon:                             /**< fall through to defhnd              */
-
-    .type       pendsvc, function   /*                                       */
-    .weak       pendsvc             /**< override as desired                 */
-pendsvc:                            /**< fall through to defhnd              */
-
-    .type       systick,function    /*                                       */
-    .weak       systick             /**< override as desired                 */
-systick:                            /**< fall through to defhnd              */
-
-    .type       wwdg, function      /*                                       */
-    .weak       wwdg                /**< override as desired                 */
-wwdg:                               /**< fall through to defhnd              */
-
-    .type       pvd, function       /*                                       */
-    .weak       pvd                 /**< override as desired                 */
-pvd:                                /**< fall through to defhnd              */
-
-    .type       tampstamp, function /*                                       */
-    .weak       tampstamp           /**< override as desired                 */
-tampstamp:                          /**< fall through to defhnd              */
-
-    .type       rtcwkup, function   /*                                       */
-    .weak       rtcwkup             /**< override as desired                 */
-rtcwkup:                            /**< fall through to defhnd              */
-
-    .type       flashg, function    /*                                       */
-    .weak       flashg              /**< override as desired                 */
-flashg:                             /**< fall through to defhnd              */
-
-    .type       rccg, function      /*                                       */
-    .weak       rccg                /**< override as desired                 */
-rccg:                               /**< fall through to defhnd              */
-
-    .type       exti0, function     /*                                       */
-    .weak       exti0               /**< override as desired                 */
-exti0:                              /**< fall through to defhnd              */
-
-    .type       exti1, function     /*                                       */
-    .weak       exti1               /**< override as desired                 */
-exti1:                              /**< fall through to defhnd              */
-
-    .type       exti2, function     /*                                       */
-    .weak       exti2               /**< override as desired                 */
-exti2:                              /**< fall through to defhnd              */
-
-    .type       exti3, function     /*                                       */
-    .weak       exti3               /**< override as desired                 */
-exti3:                              /**< fall through to defhnd              */
-
-    .type       exti4, function     /*                                       */
-    .weak       exti4               /**< override as desired                 */
-exti4:                              /**< fall through to defhnd              */
-
-    .type       dma1stream0, function /*                                     */
-    .weak       dma1stream0           /**< override as desired               */
-dma1stream0:                          /**< fall through to defhnd            */
-
-    .type       dma1stream1, function /*                                     */
-    .weak       dma1stream1           /**< override as desired               */
-dma1stream1:                          /**< fall through to defhnd            */
-
-    .type       dma1stream2, function /*                                     */
-    .weak       dma1stream2           /**< override as desired               */
-dma1stream2:                          /**< fall through to defhnd            */
-
-    .type       dma1stream3, function /*                                     */
-    .weak       dma1stream3           /**< override as desired               */
-dma1stream3:                          /**< fall through to defhnd            */
-
-    .type       dma1stream4, function /*                                     */
-    .weak       dma1stream4           /**< override as desired               */
-dma1stream4:                          /**< fall through to defhnd            */
-
-    .type       dma1stream5, function /*                                     */
-    .weak       dma1stream5           /**< override as desired               */
-dma1stream5:                          /**< fall through to defhnd            */
-
-    .type       dma1stream6, function /*                                     */
-    .weak       dma1stream6           /**< override as desired               */
-dma1stream6:                          /**< fall through to defhnd            */
-
-    .type       adcg, function      /*                                       */
-    .weak       adcg                /**< override as desired                 */
-adcg:                               /**< fall through to defhnd              */
-
-    .type       can1tx, function    /*                                       */
-    .weak       can1tx              /**< override as desired                 */
-can1tx:                             /**< fall through to defhnd              */
-
-    .type       can1rx0, function   /*                                       */
-    .weak       can1rx0             /**< override as desired                 */
-can1rx0:                            /**< fall through to defhnd              */
-
-    .type       can1rx1, function   /*                                       */
-    .weak       can1rx1             /**< override as desired                 */
-can1rx1:                            /**< fall through to defhnd              */
-
-    .type       can1sce, function   /*                                       */
-    .weak       can1sce             /**< override as desired                 */
-can1sce:                            /**< fall through to defhnd              */
-
-    .type       exti95, function    /*                                       */
-    .weak       exti95              /**< override as desired                 */
-exti95:                             /**< fall through to defhnd              */
-
-    .type       tim1brktim9g, function /*                                    */
-    .weak       tim1brktim9g           /**< override as desired              */
-tim1brktim9g:                          /**< fall through to defhnd           */
-
-    .type       tim1uptim10g, function /*                                    */
-    .weak       tim1uptim10g           /**< override as desired              */
-tim1uptim10g:                          /**< fall through to defhnd           */
-
-    .type       tim1trgcomtim11g, function /*                                */
-    .weak       tim1trgcomtim11g           /**< override as desired          */
-tim1trgcomtim11g:                          /**< fall through to defhnd       */
-
-    .type       tim1cc, function    /*                                       */
-    .weak       tim1cc              /**< override as desired                 */
-tim1cc:                             /**< fall through to defhnd              */
-
-    .type       tim2g, function     /*                                       */
-    .weak       tim2g               /**< override as desired                 */
-tim2g:                              /**< fall through to defhnd              */
-
-    .type       tim3g, function     /*                                       */
-    .weak       tim3g               /**< override as desired                 */
-tim3g:                              /**< fall through to defhnd              */
-
-    .type       tim4g, function     /*                                       */
-    .weak       tim4g               /**< override as desired                 */
-tim4g:                              /**< fall through to defhnd              */
-
-    .type       i2c1ev, function    /*                                       */
-    .weak       i2c1ev              /**< override as desired                 */
-i2c1ev:                             /**< fall through to defhnd              */
-
-    .type       i2c1er, function    /*                                       */
-    .weak       irc1er              /**< override as desired                 */
-i2c1er:                             /**< fall through to defhnd              */
-
-    .type       i2c2ev, function    /*                                       */
-    .weak       i2c2ev              /**< override as desired                 */
-i2c2ev:                             /**< fall through to defhnd              */
-
-    .type       i2c2er, function    /*                                       */
-    .weak       i2c2er              /**< override as desired                 */
-i2c2er:                             /**< fall through to defhnd              */
-
-    .type       spi1g, function     /*                                       */
-    .weak       spi1g               /**< override as desired                 */
-spi1g:                              /**< fall through to defhnd              */
-
-    .type       spi2g, function     /*                                       */
-    .weak       spi2g               /**< override as desired                 */
-spi2g:                              /**< fall through to defhnd              */
-
-    .type       usart1g, function   /*                                       */
-    .weak       usart1g             /**< override as desired                 */
-usart1g:                            /**< fall through to defhnd              */
-
-    .type       usart2g, function   /*                                       */
-    .weak       usart2g             /**< override as desired                 */
-usart2g:                            /**< fall through to defhnd              */
-
-    .type       usart3g, function   /*                                       */
-    .weak       usart3g             /**< override as desired                 */
-usart3g:                            /**< fall through to defhnd              */
-
-    .type       exti1510, function  /*                                       */
-    .weak       exti1510            /**< override as desired                 */
-exti1510:                           /**< fall through to defhnd              */
-
-    .type       rtcalarm, function  /*                                       */
-    .weak       rtcalarm            /**< override as desired                 */
-rtcalarm:                           /**< fall through to defhnd              */
-
-    .type       otgfswkup, function /*                                       */
-    .weak       otgfswkup           /**< override as desired                 */
-otgfswkup:                          /**< fall through to defhnd              */
-
-    .type       tim8brktim12g, function /*                                   */
-    .weak       tim8brktim12g           /**< override as desired             */
-tim8brktim12g:                          /**< fall through to defhnd          */
-
-    .type       tim8uptim13g, function /*                                    */
-    .weak       tim8uptim13g           /**< override as desired              */
-tim8uptim13g:                          /**< fall through to defhnd           */
-
-    .type       tim8trgcomtim14g, function /*                                */
-    .weak       tim8trgcomtim14g           /**< override as desired          */
-tim8trgcomtim14g:                          /**< fall through to defhnd       */
-
-    .type       tim8cc, function    /*                                       */
-    .weak       tim8cc              /**< override as desired                 */
-tim8cc:                             /**< fall through to defhnd              */
-
-    .type       dma1stream7, function /*                                     */
-    .weak       dma1stream7           /**< override as desired               */
-dma1stream7:                          /**< fall through to defhnd            */
-
-    .type       fsmcg, function     /*                                       */
-    .weak       fsmcg               /**< override as desired                 */
-fsmcg:                              /**< fall through to defhnd              */
-
-    .type       sdiog, function     /*                                       */
-    .weak       sdiog               /**< override as desired                 */
-sdiog:                              /**< fall through to defhnd              */
-
-    .type       tim5g, function     /*                                       */
-    .weak       tim5g               /**< override as desired                 */
-tim5g:                              /**< fall through to defhnd              */
-
-    .type       spi3g, function     /*                                       */
-    .weak       spi3g               /**< override as desired                 */
-spi3g:                              /**< fall through to defhnd              */
-
-    .type       uart4g, function    /*                                       */
-    .weak       uart4g              /**< override as desired                 */
-uart4g:                             /**< fall through to defhnd              */
-
-    .type       uart5g, function    /*                                       */
-    .weak       uart5g              /**< override as desired                 */
-uart5g:                             /**< fall through to defhnd              */
-
-    .type       tim6dac, function   /*                                       */
-    .weak       tim6dac             /**< override as desired                 */
-tim6adc:                            /**< fall through to defhnd              */
-
-    .type       tim7g, function     /*                                       */
-    .weak       tim7g               /**< override as desired                 */
-tim7g:                              /**< fall through to defhnd              */
-
-    .type       dma2stream0, function /*                                     */
-    .weak       dma2stream0           /**< override as desired               */
-dma2stream0:                          /**< fall through to defhnd            */
-
-    .type       dma2stream1, function /*                                     */
-    .weak       dma2stream1           /**< override as desired               */
-dma2stream1:                          /**< fall through to defhnd            */
-
-    .type       dma2stream2, function /*                                     */
-    .weak       dma2stream2           /**< override as desired               */
-dma2stream2:                          /**< fall through to defhnd            */
-
-    .type       dma2stream3, function /*                                     */
-    .weak       dma2stream3           /**< override as desired               */
-dma2stream3:                          /**< fall through to defhnd            */
-
-    .type       dma2stream4, function /*                                     */
-    .weak       dma2stream4           /**< override as desired               */
-dma2stream4:                          /**< fall through to defhnd            */
-
-    .type       ethg, function      /*                                       */
-    .weak       ethg                /**< override as desired                 */
-ethg:                               /**< fall through to defhnd              */
-
-    .type       ethwkup, function   /*                                       */
-    .weak       ethwkup             /**< override as desired                 */
-ethwkup:                            /**< fall through to defhnd              */
-
-    .type       can2tx, function    /*                                       */
-    .weak       can2tx              /**< override as desired                 */
-can2tx:                             /**< fall through to defhnd              */
-
-    .type       can2rx0, function   /*                                       */
-    .weak       can2rx0             /**< override as desired                 */
-can2rx0:                            /**< fall through to defhnd              */
-
-    .type       can2rx1, function   /*                                       */
-    .weak       can2rx1             /**< override as desired                 */
-can2rx1:                            /**< fall through to defhnd              */
-
-    .type       can2sce, function   /*                                       */
-    .weak       can2sce             /**< override as desired                 */
-can2sce:                            /**< fall through to defhnd              */
-
-    .type       otgfs, function     /*                                       */
-    .weak       otgfs               /**< override as desired                 */
-otgfs:                              /**< fall through to defhnd              */
-
-    .type       dma2stream5, function /*                                     */
-    .weak       dma2stream5           /**< override as desired               */
-dma2stream5:                          /**< fall through to defhnd            */
-
-    .type       dma2stream6, function /*                                     */
-    .weak       dma2stream6           /**< override as desired               */
-dma2stream6:                          /**< fall through to defhnd            */
-
-    .type       dma2stream7, function /*                                     */
-    .weak       dma2stream7           /**< override as desired               */
-dma2stream7:                          /**< fall through to defhnd            */
-
-    .type       usart6g, function   /*                                       */
-    .weak       usart6g             /**< override as desired                 */
-usart6g:                            /**< fall through to defhnd              */
-
-    .type       i2c3ev, function    /*                                       */
-    .weak       i2c3ev              /**< override as desired                 */
-i2c3ev:                             /**< fall through to defhnd              */
-
-    .type       i2c3er, function    /*                                       */
-    .weak       i2c3er              /**< override as desired                 */
-i2c3er:                             /**< fall through to defhnd              */
-
-    .type       otghsep1out, function /*                                     */
-    .weak       otghsep1out           /**< override as desired               */
-otghsep1out:                          /**< fall through to defhnd            */
-
-    .type       otghsep1in, function /*                                      */
-    .weak       otghsep1in           /**< override as desired                */
-otghsep1in:                          /**< fall through to defhnd             */
-
-    .type       otghswkup, function /*                                       */
-    .weak       otghswkup           /**< override as desired                 */
-otghswkup:                          /**< fall through to defhnd              */
-
-    .type       otghsg, function    /*                                       */
-    .weak       otghsg              /**< override as desired                 */
-otghsg:                             /**< fall through to defhnd              */
-
-    .type       dcmig, function     /*                                       */
-    .weak       dcmig               /**< override as desired                 */
-dcmig:                              /**< fall through to defhnd              */
-
-    .type       crypg, function     /*                                       */
-    .weak       crypg               /**< override as desired                 */
-crypg:                              /**< fall through to defhnd              */
-
-    .type       hashrng, function   /*                                       */
-    .weak       hashrng             /**< override as desired                 */
-hashrng:                            /**< fall through to defhnd              */
-
-    .type       fpug, function      /*                                       */
-    .weak       fpug                /**< override as desired                 */
-fpug:                               /**< fall through to defhnd              */
+    .weak       nmi
+    .thumb_set  nmi, defhnd
+
+    .weak       hflt
+    .thumb_set  hflt, defhnd
+
+    .weak       memmng
+    .thumb_set  memmng, defhnd
+
+    .weak       busfault
+    .thumb_set  busfault, defhnd
+
+    .weak       usagefault
+    .thumb_set  usagefault, defhnd
+
+    .weak       svccall
+    .thumb_set  svccall, defhnd
+
+    .weak       dbgmon
+    .thumb_set  dbgmon, defhnd
+
+    .weak       pendsvc
+    .thumb_set  pendsvc, defhnd
+
+    .weak       systick
+    .thumb_set  systick, defhnd
+
+    .weak       wwdg
+    .thumb_set  wwdg, defhnd
+
+    .weak       pvd
+    .thumb_set  pvd, defhnd
+
+    .weak       tampstamp
+    .thumb_set  tampstamp, defhnd
+
+    .weak       rtcwkup
+    .thumb_set  rtcwkup, defhnd
+
+    .weak       flashg
+    .thumb_set  flashg, defhnd
+
+    .weak       rccg
+    .thumb_set  rccg, defhnd
+
+    .weak       exti0
+    .thumb_set  exti0, defhnd
+
+    .weak       exti1
+    .thumb_set  exti1, defhnd
+
+    .weak       exti2
+    .thumb_set  exti2, defhnd
+
+    .weak       exti3
+    .thumb_set  exti3, defhnd
+
+    .weak       exti4
+    .thumb_set  exti4, defhnd
+
+    .weak       dma1stream0
+    .thumb_set  dma1stream0, defhnd
+
+    .weak       dma1stream1
+    .thumb_set  dma1stream1, defhnd
+
+    .weak       dma1stream2
+    .thumb_set  dma1stream2, defhnd
+
+    .weak       dma1stream3
+    .thumb_set  dma1stream3, defhnd
+
+    .weak       dma1stream4
+    .thumb_set  dma1stream4, defhnd
+
+    .weak       dma1stream5
+    .thumb_set  dma1stream5, defhnd
+
+    .weak       dma1stream6
+    .thumb_set  dma1stream6, defhnd
+
+    .weak       adcg
+    .thumb_set  adcg, defhnd
+
+    .weak       can1tx
+    .thumb_set  can1tx, defhnd
+
+    .weak       can1rx0
+    .thumb_set  can1rx0, defhnd
+
+    .weak       can1rx1
+    .thumb_set  can1rx1, defhnd
+
+    .weak       can1sce
+    .thumb_set  can1sce, defhnd
+
+    .weak       exti95
+    .thumb_set  exti95, defhnd
+
+    .weak       tim1brktim9g
+    .thumb_set  tim1brktim9g, defhnd
+
+    .weak       tim1uptim10g
+    .thumb_set  tim1uptim10g, defhnd
+
+    .weak       tim1trgcomtim11g
+    .thumb_set  tim1trgcomtim11g, defhnd
+
+    .weak       tim1cc
+    .thumb_set  tim1cc, defhnd
+
+    .weak       tim2g
+    .thumb_set  tim2g, defhnd
+
+    .weak       tim3g
+    .thumb_set  tim3g, defhnd
+
+    .weak       tim4g
+    .thumb_set  tim4g, defhnd
+
+    .weak       i2c1ev
+    .thumb_set  i2c1ev, defhnd
+
+    .weak       i2c1er
+    .thumb_set  i2c1er, defhnd
+
+    .weak       i2c2ev
+    .thumb_set  i2c2ev, defhnd
+
+    .weak       i2c2er
+    .thumb_set  i2c2er, defhnd
+
+    .weak       spi1g
+    .thumb_set  spi1g, defhnd
+
+    .weak       spi2g
+    .thumb_set  spi2g, defhnd
+
+    .weak       usart1g
+    .thumb_set  usart1g, defhnd
+
+    .weak       usart2g
+    .thumb_set  usart2g, defhnd
+
+    .weak       usart3g
+    .thumb_set  usart3g, defhnd
+
+    .weak       exti1510
+    .thumb_set  exti1510, defhnd
+
+    .weak       rtcalarm
+    .thumb_set  rtcalarm, defhnd
+
+    .weak       otgfswkup
+    .thumb_set  otgfswkup, defhnd
+
+    .weak       tim8brktim12g
+    .thumb_set  tim8brktim12g, defhnd
+
+    .weak       tim8uptim13g
+    .thumb_set  tim8uptim13g, defhnd
+
+    .weak       tim8trgcomtim14g
+    .thumb_set  tim8trgcomtim14g, defhnd
+
+    .weak       tim8cc
+    .thumb_set  tim8cc, defhnd
+
+    .weak       dma1stream7
+    .thumb_set  dma1stream7, defhnd
+
+    .weak       fsmcg
+    .thumb_set  fsmcg, defhnd
+
+    .weak       sdiog
+    .thumb_set  sdiog, defhnd
+
+    .weak       tim5g
+    .thumb_set  tim5g, defhnd
+
+    .weak       spi3g
+    .thumb_set  spi3g, defhnd
+
+    .weak       uart4g
+    .thumb_set  uart4g, defhnd
+
+    .weak       uart5g
+    .thumb_set  uart5g, defhnd
+
+    .weak       tim6dac
+    .thumb_set  tim6dac, defhnd
+
+    .weak       tim7g
+    .thumb_set  tim7g, defhnd
+
+    .weak       dma2stream0
+    .thumb_set  dma2stream0, defhnd
+
+    .weak       dma2stream1
+    .thumb_set  dma2stream1, defhnd
+
+    .weak       dma2stream2
+    .thumb_set  dma2stream2, defhnd
+
+    .weak       dma2stream3
+    .thumb_set  dma2stream3, defhnd
+
+    .weak       dma2stream4
+    .thumb_set  dma2stream4, defhnd
+
+    .weak       ethg
+    .thumb_set  ethg, defhnd
+
+    .weak       ethwkup
+    .thumb_set  ethwkup, defhnd
+
+    .weak       can2tx
+    .thumb_set  can2tx, defhnd
+
+    .weak       can2rx0
+    .thumb_set  can2rx0, defhnd
+
+    .weak       can2rx1
+    .thumb_set  can2rx1, defhnd
+
+    .weak       can2sce
+    .thumb_set  can2sce, defhnd
+
+    .weak       otgfsg
+    .thumb_set  otgfsg, defhnd
+
+    .weak       dma2stream5
+    .thumb_set  dma2stream5, defhnd
+
+    .weak       dma2stream6
+    .thumb_set  dma2stream6, defhnd
+
+    .weak       dma2stream7
+    .thumb_set  dma2stream7, defhnd
+
+    .weak       usart6g
+    .thumb_set  usart6g, defhnd
+
+    .weak       i2c3ev
+    .thumb_set  i2c3ev, defhnd
+
+    .weak       i2c3er
+    .thumb_set  i2c3er, defhnd
+
+    .weak       otghsep1out
+    .thumb_set  otghsep1out, defhnd
+
+    .weak       otghsep1in
+    .thumb_set  otghsep1in, defhnd
+
+    .weak       otghswkup
+    .thumb_set  otghswkup, defhnd
+
+    .weak       otghsg
+    .thumb_set  otghsg, defhnd
+
+    .weak       dcmig
+    .thumb_set  dcmig, defhnd
+
+    .weak       crypg
+    .thumb_set  crypg, defhnd
+
+    .weak       hashrng
+    .thumb_set  hashrng, defhnd
+
+    .weak       fpug
+    .thumb_set  fpug, defhnd
 
     .global     defhnd
-    .type       defhnd, function    /*                                       */
-defhnd:                             /*                                       */
-    bkpt        #0                  /*                                       */
-    .pool
+    .type       defhnd, function
+defhnd:
+    bkpt        #0
+    .size       defhnd, .-defhnd
 # -----------------------------------------------------------------------------
