@@ -23,7 +23,7 @@ reset:
 
     ldr         r0, =__bitband_bss_start__
     ldr         r1, =__bitband_bss_end__
-    bl          byte_blk_fill                   /**< wipe out .bitband.bss   */
+    bl          byte_blk_fill                   /**< wipe out .bitband_bss   */
 
     ldr         r0, =__data_load_start__
     ldr         r1, =__data_load_end__
@@ -32,17 +32,17 @@ reset:
 
     ldr         r0, =__bitband_data_load_start__
     ldr         r1, =__bitband_data_load_end__
-    ldr         r2, =__bitband_data_run_start__ /**< load .bitband.data      */
+    ldr         r2, =__bitband_data_run_start__ /**< load .bitband_data      */
     bl          byte_blk_copy
 
     ldr         r0, =__sram1_data_load_start__
     ldr         r1, =__sram1_data_load_end__
-    ldr         r2, =__sram1_data_run_start__   /**< load .sram1.data        */
+    ldr         r2, =__sram1_data_run_start__   /**< load .sram1_data        */
     bl          byte_blk_copy
 
     ldr         r0, =__sram2_data_load_start__
     ldr         r1, =__sram2_data_load_end__
-    ldr         r2, =__sram2_data_run_start__   /**< load .sram2.data        */
+    ldr         r2, =__sram2_data_run_start__   /**< load .sram2_data        */
     bl          byte_blk_copy
 
     ldr         r0, =__fast_load_start__
@@ -76,8 +76,8 @@ reset:
     msr         psp, r0
     mov         r0, #0b010                  /**< switch to the process stack */
     msr         control, r0
-
-    b           main
+    push        {r4}                        /**< push PLL lockup result ...  */
+    b           main                        /**< ... never to return         */
     .size       reset,.-reset
 # -----------------------------------------------------------------------------
 

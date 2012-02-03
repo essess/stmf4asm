@@ -25,9 +25,9 @@ __flash_vectors_start:              /* description                           */
     .word       pendsvc             /**< pend service request                */
     .word       systick             /**< system tick                         */
     .word       wwdg                /**< windowed watchdog                   */
-    .word       pvd                 /**< PVD through EXTI line               */
-    .word       tampstamp           /**< tamper and timestamp through EXTI ln*/
-    .word       rtcwkup             /**< rtc wakeup through EXTI line        */
+    .word       pvd                 /**< PVD [EXTI16]                        */
+    .word       tampstamp           /**< tamper and timestamp [EXTI21]       */
+    .word       rtcwkup             /**< rtc wakeup [EXTI22]                 */
     .word       flashg              /**< flash global int                    */
     .word       rccg                /**< RCC global int                      */
     .word       exti0               /**< EXTI line 0                         */
@@ -65,8 +65,8 @@ __flash_vectors_start:              /* description                           */
     .word       usart2g             /**< USART2 global int                   */
     .word       usart3g             /**< USART3 global int                   */
     .word       exti1510            /**< EXTI line[15:10]                    */
-    .word       rtcalarm            /**< RTC alarms (A/B) through EXTI       */
-    .word       otgfswkup           /**< OTG FS wakup through EXTI           */
+    .word       rtcalarm            /**< RTC alarms (A/B) through [EXTI17]   */
+    .word       otgfswkup           /**< OTG FS wakup through [EXTI18]       */
     .word       tim8brktim12g       /**< TIM8 break, TIM12 global int        */
     .word       tim8uptim13g        /**< TIM8 update, TIM13 global int       */
     .word       tim8trgcomtim14g    /**< TIM8 trig/commutation, TIM14 global */
@@ -86,7 +86,7 @@ __flash_vectors_start:              /* description                           */
     .word       dma2stream3         /**< DMA2 Stream3 global int             */
     .word       dma2stream4         /**< DMA2 Stream4 global int             */
     .word       ethg                /**< ethernet global int                 */
-    .word       ethwkup             /**< ethernet wakeup through EXTI line   */
+    .word       ethwkup             /**< ethernet wakeup through [EXTI19]    */
     .word       can2tx              /**< CAN2 TX                             */
     .word       can2rx0             /**< CAN2 RX0                            */
     .word       can2rx1             /**< CAN2 RX1                            */
@@ -100,7 +100,7 @@ __flash_vectors_start:              /* description                           */
     .word       i2c3er              /**< I2C3 error                          */
     .word       otghsep1out         /**< OTG HS endpoint 1 OUT               */
     .word       otghsep1in          /**< OTG HS endpoint 1 IN                */
-    .word       otghswkup           /**< OTG HS wakeup through EXTI          */
+    .word       otghswkup           /**< OTG HS wakeup through [EXTI20]      */
     .word       otghsg              /**< OTG HS global int                   */
     .word       dcmig               /**< DCMI global int                     */
     .word       crypg               /**< CRYP global int                     */
