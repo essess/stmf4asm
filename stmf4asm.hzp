@@ -11,6 +11,7 @@
       <file file_name="startup.s"/>
       <file file_name="main.s"/>
       <file file_name="pll_init.s"/>
+      <file file_name="led_init.s"/>
     </folder>
     <folder Name="System Files">
       <file file_name="$(TargetsDir)/STM32/STM32_Target.js">

@@ -11,5 +11,5 @@
     .global     func
 func:
     bkpt        #0                  /**<    comment                          */
-    .size       func,.-func
+    .size       func, .-func
 # -----------------------------------------------------------------------------
