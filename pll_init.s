@@ -25,10 +25,8 @@
     .set        PLLN,                   (168 <<  6)
     .set        PLLM,                   (4   <<  0)
     .set        DEFAULT_PLLCFGR_VALUE,  (PLLQ|PLLSRC|PLLP|PLLN|PLLM)
-    .set        PLLCFGR_RESV_MASK,      0b11110000101111001000000000000000
-    .set        PLLCFGR_BIC_MASK,       ~PLLCFGR_RESV_MASK
 
-    .set        LOCK_TIMEOUT,           (350*3)
+    .set        LOCK_TIMEOUT,           (350*10)  /**< ~220us per datasheet  */
 
     .set        FLUSH_ID_LINES,         (DCRST|ICRST)
     .set        DEFAULT_ACR_VALUE,      (DCEN|ICEN|PRFTEN|WS5)
@@ -46,8 +44,6 @@
     .set        SW,                     (0b10   <<  0)
     .set        DEFAULT_CFGR_VALUE,     (MCO2|MCO2PRE|MCO1PRE|I2SSRC|MCO1| \
                                          RTCPRE|PPRE2|PPRE1|HPRE|SWS|SW)
-    .set        CFGR_RESV_MASK,         0b00000000000000000000001100000000
-    .set        CFGR_BIC_MASK,          ~CFGR_RESV_MASK
 
 # -----------------------------------------------------------------------------
     .type       pll_init, function
@@ -73,7 +69,7 @@ lock_wait:
     cbz         r0, lock_fail
     subs        r0, #1
     ldr         r1, [r3, #RCC_CR_OFFSET]
-    tst         r1, #PLLRDY              /**< ~350 loops to lockup (~175us)  */
+    tst         r1, #PLLRDY          /**< ~350 loops (typ) to lockup (~22us) */
     beq         lock_wait
 
 lock_ok:
