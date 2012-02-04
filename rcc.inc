@@ -14,10 +14,14 @@
 # -- PLLCFGR ------------------------------------------------------------------
     .set    RCC_PLLCFGR,            0x40023804
     .set    RCC_PLLCFGR_OFFSET,     RCC_PLLCFGR - RCC_BASE
+    .set    PLLCFGR_RESV_MASK,      0b11110000101111001000000000000000
+    .set    PLLCFGR_BIC_MASK,       ~PLLCFGR_RESV_MASK
 
 # -- CFGR ---------------------------------------------------------------------
     .set    RCC_CFGR,               0x40023808
     .set    RCC_CFGR_OFFSET,        RCC_CFGR - RCC_BASE
+    .set    CFGR_RESV_MASK,         0b00000000000000000000001100000000
+    .set    CFGR_BIC_MASK,          ~CFGR_RESV_MASK
 
 # -- CIR ----------------------------------------------------------------------
     .set    RCC_CIR,                0x4002380C
@@ -50,6 +54,8 @@
 # -- AHB1ENR ------------------------------------------------------------------
     .set    RCC_AHB1ENR,            0x40023830
     .set    RCC_AHB1ENR_OFFSET,     RCC_AHB1ENR - RCC_BASE
+    .set    AHB1ENR_RESV_MASK,      0b10000001100010111110111000000000
+    .set    AHB1ENR_BIC_MASK,       ~AHB1ENR_RESV_MASK
 
 # -- AHB2ENR ------------------------------------------------------------------
     .set    RCC_AHB2ENR,            0x40023834
