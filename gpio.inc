@@ -33,16 +33,50 @@
 
 # -- GPIO Bits ----------------------------------------------------------------
 
-    .set    GPIO_MODER_OFFSET,      0x00    /**< TODO: fillin bits */
+    .set    GPIO_MODER_OFFSET,      0x00
+    .set    MODE_IN,                0b00    /**< Input (reset)               */
+    .set    MODE_OUT,               0b01    /**< General purpose output mode */
+    .set    MODE_ALT,               0b10    /**< Alternate function mode     */
+    .set    MODE_ANA,               0b11    /**< Analog mode                 */
+
     .set    GPIO_OTYPER_OFFSET,     0x04
+    .set    OTYPE_PP,               0b0     /**< Output push-pull (reset)    */
+    .set    OTYPE_OD,               0b1     /**< Output open drain           */
+
     .set    GPIO_OSPEEDR_OFFSET,    0x08
+    .set    OSPEED_2MHZ,            0b00    /**< Low speed                   */
+    .set    OSPEED_25MHZ,           0b01    /**< Medium speed                */
+    .set    OSPEED_50MHZ,           0b10    /**< Fast speed                  */
+    .set    OSPEED_100MHZ,          0b11    /**< High speed @ 30pf           */
+
     .set    GPIO_PUPDR_OFFSET,      0x0C
+    .set    PUPD_NONE,              0b00    /**< No pull-up, pull-down       */
+    .set    PUPD_UP,                0b01    /**< Pull-up                     */
+    .set    PUPD_DOWN,              0b10    /**< Pull-down                   */
+
     .set    GPIO_IDR_OFFSET,        0x10
     .set    GPIO_ODR_OFFSET,        0x14
     .set    GPIO_BSRR_OFFSET,       0x18
     .set    GPIO_LCKR_OFFSET,       0x1C
+
     .set    GPIO_AFRL_OFFSET,       0x20
     .set    GPIO_AFRH_OFFSET,       0x24
+    .set    AFR_AF0,                0b0000
+    .set    AFR_AF1,                0b0001
+    .set    AFR_AF2,                0b0010
+    .set    AFR_AF3,                0b0011
+    .set    AFR_AF4,                0b0100
+    .set    AFR_AF5,                0b0101
+    .set    AFR_AF6,                0b0110
+    .set    AFR_AF7,                0b0111
+    .set    AFR_AF8,                0b1000
+    .set    AFR_AF9,                0b1001
+    .set    AFR_AF10,               0b1010
+    .set    AFR_AF11,               0b1011
+    .set    AFR_AF12,               0b1100
+    .set    AFR_AF13,               0b1101
+    .set    AFR_AF14,               0b1110
+    .set    AFR_AF15,               0b1111
 
 # -- GPIOA --------------------------------------------------------------------
     .set    GPIOA_MODER,            GPIOA_BASE + GPIO_MODER_OFFSET
