@@ -17,8 +17,8 @@
       <file file_name="systick.s"/>
       <folder Name="pool">
         <file file_name="pool/pool_init.s"/>
-        <file file_name="pool/pool_alloc.s"/>
-        <file file_name="pool/pool_free.s"/>
+        <file file_name="pool/pool_put.s"/>
+        <file file_name="pool/pool_get.s"/>
       </folder>
     </folder>
     <folder Name="System Files">
