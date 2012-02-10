@@ -15,6 +15,11 @@
       <file file_name="led_set_state.s"/>
       <file file_name="systick_init.s"/>
       <file file_name="systick.s"/>
+      <folder Name="pool">
+        <file file_name="pool/pool_init.s"/>
+        <file file_name="pool/pool_alloc.s"/>
+        <file file_name="pool/pool_free.s"/>
+      </folder>
     </folder>
     <folder Name="System Files">
       <file file_name="$(TargetsDir)/STM32/STM32_Target.js">
