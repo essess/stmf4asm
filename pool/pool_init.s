@@ -8,6 +8,8 @@
  *  r3 - block count
  * returns:
  *  void
+ * note:
+ *  is NOT threadsafe
  */
     .section    .text
     .syntax     unified
