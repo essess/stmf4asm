@@ -28,7 +28,7 @@ main:
 
   signal field:
     0bpfffffddddddddddssssssssssssssss
-    p - pool id (1bit)  (small or large)
+    p - pool id (1bit)  (small == 0b0 or large == 0b1)
     f - free    (5bits)
     d - dest    (10bits)
     s - signal  (16bits)
@@ -39,6 +39,9 @@ main:
   dest is not responsible for 'disposal' of ev. we'll do it
   here in ev_post_dispatch - thats why the pool id field is
   in the signal
+
+  optimise for small pool since it's likely to be the
+  common case
 
   destinations can clobber r0-r6,flags but must preserve r7-r14(lr)
 */
@@ -84,7 +87,7 @@ ev_post_dispatch:
     .type       ev_init, function
     .global     ev_init
 ev_init:
-    push        { lr }
+    push        { r7-r9, lr }
     ldr         r0, =sm_ev_pool_head
     ldr         r1, =sm_ev_pool_start
     mov         r2, #SM_EV_BLK_WORDSIZE
@@ -95,7 +98,33 @@ ev_init:
     mov         r2, #LRG_EV_BLK_WORDSIZE
     mov         r3, #LRG_EV_BLK_CNT
     bl          pool_init
-    pop         { pc }
+
+
+// test
+
+    ldr         r0, =sm_ev_pool_head
+    bl          pool_get
+    movs        r7, r0
+
+    ldr         r0, =sm_ev_pool_head
+    bl          pool_get
+    movs        r8, r0
+
+    ldr         r0, =sm_ev_pool_head
+    bl          pool_get
+    // check r0 - should be 0
+
+    // go back and return blocks to pool
+    // in reverse order
+    movs        r1, r7
+    ldr         r0, =sm_ev_pool_head
+    bl          pool_put
+
+    movs        r1, r8
+    ldr         r0, =sm_ev_pool_head
+    bl          pool_put
+
+    pop         { r7-r9, pc }
     .size       ev_init, .-ev_init
 # -----------------------------------------------------------------------------
 
@@ -120,10 +149,25 @@ ev_pop:             // ev_push_back is opposite
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
+    .type       ev_alloc, function
+    .global     ev_alloc
+ev_alloc:
+    push        { lr }
+    // check which pool
+    // alloc, return null on empty
+    // fillin defaults (pool/sig/dest/)
+    pop         { pc }
+    .size       ev_alloc, .-ev_alloc
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
     .type       ev_free, function
     .global     ev_free
 ev_free:
-    bx          lr                  /**<    comment                          */
+    push        { lr }
+    // check which pool
+    // free
+    pop         { pc }
     .size       ev_free, .-ev_free
 # -----------------------------------------------------------------------------
 
@@ -137,13 +181,13 @@ bad_destination:
 # -----------------------------------------------------------------------------
 
     .set        SM_EV_BLK_WORDSIZE,   (  4)
-    .set        SM_EV_BLK_CNT,        (256)
+    .set        SM_EV_BLK_CNT,        (  2)
 
     .set        LRG_EV_BLK_WORDSIZE,  (  8)
     .set        LRG_EV_BLK_CNT,       ( 64)
 
 # -----------------------------------------------------------------------------
-    .section    .noinit
+    .section    .bss
 
     .align      2
 sm_ev_pool_head:

@@ -12,9 +12,9 @@
     .thumb
 
 # -----------------------------------------------------------------------------
-    .type       pool_alloc, function
-    .global     pool_alloc
-pool_alloc:
+    .type       pool_get, function
+    .global     pool_get
+pool_get:
     cpsid       i                   /**<                        start atomic */
     ldr         r1, [r0]            /**< grab value of head                R */
     cbz         r1, 1f              /**< is pool empty? (null head)          */
@@ -23,5 +23,5 @@ pool_alloc:
 1:  cpsie       i                   /**<                          end atomic */
     movs        r0, r1              /**< ref to unlinked block is retval     */
     bx          lr
-    .size       pool_alloc, .-pool_alloc
+    .size       pool_get, .-pool_get
 # -----------------------------------------------------------------------------
