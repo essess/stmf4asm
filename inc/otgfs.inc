@@ -396,8 +396,8 @@
     .set    OTG_FS_PCGCCTL,             OTG_FS_BASE + OTG_FS_PCGCCTL_OFFSET
 
 
-// do FIFO's here ? need to figure out what the data sheet is trying to say
-// it looks like there are 4 endpoints as a device and 8 in host mode ?
+#        do FIFO's here ? need to figure out what the data sheet is trying to say
+#        it looks like there are 4 endpoints as a device and 8 in host mode ?
 # DFIFO (data fifo)
 # 0x1000
 

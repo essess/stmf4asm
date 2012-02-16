@@ -54,6 +54,7 @@ main:
     ldr         r9, =evq_cntblk         /**< cache event queue control block */
     bl          ev_init_sm              /**< init global use event pools     */
     bl          ev_init_lrg
+    bl          usbfs_init              /**< usb fullspeed device            */
     bl          systick_init            /**< 1000Hz/1ms                      */
 
 
@@ -89,8 +90,10 @@ ev_dispatch:
 dest_table:                             /*   about +500ns out from int!      */
     .hword      (dest000-dest_table)>>1
     .hword      (dest001-dest_table)>>1
+    .hword      (dest002-dest_table)>>1
 dest000: b      bad_destination         /**< unknown/unhandled recipiant     */
 dest001: b      sm_systick              /**< systick timer statemachine      */
+dest002: b      sm_usbfs                /**< usb fullspeed dev sm            */
     .thumb_func
 ev_post_dispatch:                       /**< return ev in r7 back to pool    */
     tst         r8, #(1<<31)            /**< AND against pool field          */
@@ -100,6 +103,15 @@ ev_post_dispatch:                       /**< return ev in r7 back to pool    */
     movs        r0, r7                  /**< get event ref to expected reg   */
     bl          pool_put                /*   for the _put()                  */
     b           evq_get
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+    .type       bad_destination, function
+    .global     bad_destination
+bad_destination:
+    led         r6, RED_ON
+    /* TODO: log/count, but try to keep operating as best as possible */
+    bx          lr
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -116,10 +128,8 @@ sm_systick:
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
-    .type       bad_destination, function
-    .global     bad_destination
-bad_destination:
-    led         r6, RED_ON
-    /* TODO: log/count, but try to keep operating as best as possible */
+    .type       sm_usbfs, function
+    .global     sm_usbfs
+sm_usbfs:
     bx          lr
 # -----------------------------------------------------------------------------
