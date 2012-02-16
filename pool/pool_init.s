@@ -31,5 +31,4 @@ next:
     str         r0, [r1]                /**< point curr to next              */
     movs        r1, r0                  /**< next is now curr                */
     b           next
-    .size       pool_init, .-pool_init
 # -----------------------------------------------------------------------------

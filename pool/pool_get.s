@@ -23,5 +23,4 @@ pool_get:
 1:  cpsie       i                   /**<                          end atomic */
     movs        r0, r1              /**< ref to unlinked block is retval     */
     bx          lr
-    .size       pool_get, .-pool_get
 # -----------------------------------------------------------------------------

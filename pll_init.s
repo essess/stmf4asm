@@ -63,15 +63,13 @@ pll_init:
     ldr         r2, =(HSEON|PLLON)       /*   for lock within a reasonable   */
     orrs        r1, r2                   /*   timeframe                      */
     str         r1, [r3, #RCC_CR_OFFSET]
-
-    movw        r0, #LOCK_TIMEOUT
+    movw        r0, #LOCK_TIMEOUT    /**< fire up main pll                   */
 lock_wait:
     cbz         r0, lock_fail
     subs        r0, #1
     ldr         r1, [r3, #RCC_CR_OFFSET]
     tst         r1, #PLLRDY          /**< ~350 loops (typ) to lockup (~22us) */
     beq         lock_wait
-
 lock_ok:
     ldr         r2, =FLASH_ACR      /**< setup flash array for 5ws and       */
     ldr         r1, =FLUSH_ID_LINES /*   enable cache/prefetch after         */
@@ -85,8 +83,6 @@ lock_ok:
     bic         r0, r1
     orrs        r0, r2
     str         r0, [r3, #RCC_CFGR_OFFSET] /**< now on main pll @ 168MHz     */
-
 lock_fail:
     bx          lr
-    .size       pll_init, .-pll_init
 # -----------------------------------------------------------------------------

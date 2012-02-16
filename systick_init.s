@@ -37,5 +37,4 @@ systick_init:
     movs        r0, #CSR
     str         r0, [r1, #SYST_CSR_OFFSET]
     bx          lr
-    .size       systick_init, .-systick_init
 # -----------------------------------------------------------------------------

@@ -49,5 +49,4 @@ led_init:
     orr         r1, LED_MODER_VALUE             /**< set to outputs          */
     str         r1, [r0, GPIO_MODER_OFFSET]
     bx          lr
-    .size       led_init, .-led_init
 # -----------------------------------------------------------------------------

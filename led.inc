@@ -23,3 +23,9 @@
     .set    BLUE_OFF,               (BLUE_ON << 16)
     .set    ALL_OFF,                (ORANGE_OFF|GREEN_OFF|RED_OFF|BLUE_OFF)
     .set    ALL_ON,                 (ORANGE_ON|GREEN_ON|RED_ON|BLUE_ON)
+
+# inlining macro which assumes GPIOD_BASE is in r12
+    .macro  led reg, state
+    mov         \reg, #\state
+    str         \reg, [r10, #GPIO_BSRR_OFFSET]
+    .endm
