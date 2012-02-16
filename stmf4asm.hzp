@@ -20,6 +20,17 @@
         <file file_name="pool/pool_put.s"/>
         <file file_name="pool/pool_get.s"/>
       </folder>
+      <folder Name="ev">
+        <file file_name="ev/ev_alloc_lrg.s"/>
+        <file file_name="ev/ev_alloc_sm.s"/>
+        <file file_name="ev/ev_init_lrg.s"/>
+        <file file_name="ev/ev_init_sm.s"/>
+        <file file_name="ev/ev_destroy.s"/>
+      </folder>
+      <folder Name="evq">
+        <file file_name="evq/evq_put.s"/>
+        <file file_name="evq/evq_cntblk.s"/>
+      </folder>
     </folder>
     <folder Name="System Files">
       <file file_name="$(TargetsDir)/STM32/STM32_Target.js">

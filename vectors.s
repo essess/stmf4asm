@@ -109,7 +109,6 @@ __flash_vectors_start:              /* description                           */
 __flash_vectors_end:
     .set        __flash_vectors_size, . - __flash_vectors_start
     .set        __flash_vectors_word_size, __flash_vectors_size/4
-    .size       __flash_vectors, __flash_vectors_size
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -127,7 +126,6 @@ __ram_vectors_start:
 __ram_vectors_end:                      /*   via load_ram_vectors          */
     .set        __ram_vectors_size, . - __ram_vectors_start
     .set        __ram_vectors_word_size, __ram_vectors_size/4
-    .size       __ram_vectors, __ram_vectors_size
 #endif
 # -----------------------------------------------------------------------------
 
@@ -413,5 +411,4 @@ __ram_vectors_end:                      /*   via load_ram_vectors          */
     .type       defhnd, function
 defhnd:
     bkpt        #0
-    .size       defhnd, .-defhnd
 # -----------------------------------------------------------------------------

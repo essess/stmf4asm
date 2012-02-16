@@ -1,6 +1,6 @@
 /**
  * @public or @internal
- * <description/usage/assumptions>
+ *  <description/usage/assumptions>
  * params:
  *  r0 - use
  *  rn - use
@@ -18,5 +18,4 @@
     .global     func
 func:
     bkpt        #0                  /**<    comment                          */
-    .size       func, .-func
 # -----------------------------------------------------------------------------

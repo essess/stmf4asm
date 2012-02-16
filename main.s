@@ -1,12 +1,43 @@
-
+/**
+ * @public
+ *  application entry point
+ * params:
+ *  top of process stack has results of pll lock
+ * retval:
+ *  never returns
+ * note:
+ *  r7  - holds reference to current event
+ *  r8  - holds the signal field of currently active ev
+ *  r9  - holds reference to the evq control block
+ *  r10 - =GPIOD_BASE
+ *  r11 - tbd
+ *  r12 - tbd
+ *
+ *  dest is not responsible for 'disposal' of ev. we'll do it
+ *  here in ev_post_dispatch - thats why the pool id field is
+ *  in the signal
+ *
+ *  destinations can clobber r0-r6 - must preserve r7-r12(+psp/lr/pc)
+ *
+ *  r7/r8 are NOT set atomically as a pair - doesn't matter much since
+ *  NO ONE should be monkeying with those registers from any context
+ *  other than this one.
+ *
+ *  signal field description:
+ *    0bpfffffddddddddddssssssssssssssss
+ *    p - pool id (1bit)  (small == 0b0 or large == 0b1)
+ *    f - free    (5bits)
+ *    d - dest    (10bits)
+ *    s - signal  (16bits)
+ *
+ */
     .section    .text
     .syntax     unified
     .thumb
 
+    .include    "dest.inc"
     .include    "gpio.inc"
     .include    "led.inc"
-
-    .set        MAX_DEST,   001 // test hack
 
 # -----------------------------------------------------------------------------
     .type       main, function
@@ -16,116 +47,59 @@ main:
     pop         {r0}                    /**< tos has pll lock result         */
     cmp         r0, #0
     ite         eq
-    ldreq       r8, =(GREEN_OFF|RED_ON)
-    ldrne       r8, =(GREEN_ON|RED_OFF)
-    ldr         r9, =GPIOD_BASE
-    str         r8, [r9, #GPIO_BSRR_OFFSET]
-    bl          ev_init                 /**< init event pools                */
+    ldreq       r6, =(GREEN_OFF|RED_ON) /**< show red on lock fail           */
+    ldrne       r6, =(GREEN_ON|RED_OFF) /**< green otherwise                 */
+    ldr         r10, =GPIOD_BASE
+    str         r6, [r10, #GPIO_BSRR_OFFSET]
+    ldr         r9, =evq_cntblk         /**< cache event queue control block */
+    bl          ev_init_sm              /**< init global use event pools     */
+    bl          ev_init_lrg
     bl          systick_init            /**< 1000Hz/1ms                      */
 
-/* 
-  odd bits of notes for main chunk of code below:
 
-  signal field:
-    0bpfffffddddddddddssssssssssssssss
-    p - pool id (1bit)  (small == 0b0 or large == 0b1)
-    f - free    (5bits)
-    d - dest    (10bits)
-    s - signal  (16bits)
+    /*        TODO: kick off any other remaining event sources               */
 
-  current ev to process is pointed to by r7
-    ldr rd,[r7] always pulls the signal field (described above)
 
-  dest is not responsible for 'disposal' of ev. we'll do it
-  here in ev_post_dispatch - thats why the pool id field is
-  in the signal
-
-  optimise for small pool since it's likely to be the
-  common case
-
-  destinations can clobber r0-r6,flags but must preserve r7-r14(lr)
-*/
-
-ev_process:                             /**< ~150ns to iterate               */
-#    bl          ev_pop
-#    cbnz        r7, ev_dispatch         /**< anything available?             */
-#    wfi                                 /*     nope, wait for an int         */
-#    b           ev_process              /**< and try again                   */
-// try it blk above to avoid stalling all the time
-    wfi                    //
-    movs        r0, #0x001 // systick - test hack
-
+evq_get:                                /**< ~150ns to iterate               */
+    cpsid   i
+    ldr         r0, [r9, #+0x08]        /**< grab current evq ev count       */
+    cbnz        r0, ev_dispatch         /**<   empty?                        */
+    led         r0, BLUE_OFF            /**< yep, work complete              */
+    wfi                                 /**< wait ...                        */
+    cpsie       i                       /*   ... run int that just woke us   */
+    b           evq_get                 /*   ... and try again               */
 ev_dispatch:
-    mov         r8, #BLUE_ON            /**< load indicator on, doing work   */
-    str         r8, [r9, #GPIO_BSRR_OFFSET]
-
-    /* TODO: extract dest field to r0 */
-
-    cmp         r0, #MAX_DEST           /**< range check destination         */
+    subs        r0, #1                  /**< current count--                 */
+    str         r0, [r9, #+0x08]        /*                                   */
+    ldr         r1, [r9, #+0x04]        /**< grab tail                       */
+    ldr         r7, [r1], #4            /**< grab event and postinc          */
+    ldr         r0, [r9, #+0x14]        /**< get end of buffer ...           */
+    cmp         r1, r0                  /**< ... is tail >= end ?            */
+    it          ge
+    ldrge       r1, [r9, #+0x10]        /**< correct to buffer start (wrap)  */
+    str         r1, [r9, #+0x04]        /**< and write back updated tail     */
+    cpsie       i
+    ldr         r8, [r7]                /**< fetch signal field from curr ev */
+    ubfx        r0, r8, #16, #10        /**< isolate dest field              */
+    cmp         r0, #MAX_DEST           /**< range check                     */
     it          gt                      /**< 0 cycle fold advantage          */
     eorgt       r0, r0                  /**< coerce to bad_destination (000) */
     ldr         lr, =ev_post_dispatch   /**< cheaper than lots of push/pop   */
     tbh         [pc, r0, lsl #1]        /**< dispatch ev to appropriate dest */
-dest_table:
+dest_table:                             /*   about +500ns out from int!      */
     .hword      (dest000-dest_table)>>1
     .hword      (dest001-dest_table)>>1
 dest000: b      bad_destination         /**< unknown/unhandled recipiant     */
 dest001: b      sm_systick              /**< systick timer statemachine      */
     .thumb_func
-ev_post_dispatch:
-    bl          ev_free                 /**< return ev in r7 back to pool    */
-    mov         r8, #BLUE_OFF           /**< work complete                   */
-    str         r8, [r9, #GPIO_BSRR_OFFSET]
-    b           ev_process
-    .size       main, .-main
-# -----------------------------------------------------------------------------
-
-
-// test hacks follow
-
-# -----------------------------------------------------------------------------
-    .type       ev_init, function
-    .global     ev_init
-ev_init:
-    push        { r7-r9, lr }
-    ldr         r0, =sm_ev_pool_head
-    ldr         r1, =sm_ev_pool_start
-    mov         r2, #SM_EV_BLK_WORDSIZE
-    mov         r3, #SM_EV_BLK_CNT
-    bl          pool_init
-    ldr         r0, =lrg_ev_pool_head
-    ldr         r1, =lrg_ev_pool_start
-    mov         r2, #LRG_EV_BLK_WORDSIZE
-    mov         r3, #LRG_EV_BLK_CNT
-    bl          pool_init
-
-
-// test
-
-    ldr         r0, =sm_ev_pool_head
-    bl          pool_get
-    movs        r7, r0
-
-    ldr         r0, =sm_ev_pool_head
-    bl          pool_get
-    movs        r8, r0
-
-    ldr         r0, =sm_ev_pool_head
-    bl          pool_get
-    // check r0 - should be 0
-
-    // go back and return blocks to pool
-    // in reverse order
-    movs        r1, r7
-    ldr         r0, =sm_ev_pool_head
-    bl          pool_put
-
-    movs        r1, r8
-    ldr         r0, =sm_ev_pool_head
-    bl          pool_put
-
-    pop         { r7-r9, pc }
-    .size       ev_init, .-ev_init
+ev_post_dispatch:                       /**< return ev in r7 back to pool    */
+    tst         r8, #(1<<31)            /**< AND against pool field          */
+    ite         eq                      /**< 0 cycle fold advantage          */
+    ldreq       r1, =sm_ev_pool_head    /**< 0b0 - small pool                */
+    ldrne       r1, =lrg_ev_pool_head   /**< 0b1 - large pool                */
+    movs        r0, r7                  /**< get event ref to expected reg   */
+    bl          pool_put                /*   for the _put()                  */
+    b           evq_get
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
@@ -133,74 +107,19 @@ ev_init:
     .global     sm_systick
 sm_systick:
     /* systime++ */
-    /* eventually extend out to include a full blown timer system */
+    /* eventually extend out to include a full blown timer system
+       need to so some thinking on it first, I want constant/predictable
+       manipulation. o(1) lookups no matter the size of the timeout list
+       probably not possible and more line o(n) since we need to walk
+       all timers to update them */
     bx          lr
-    .size       sm_systick, .-sm_systick
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-    .type       ev_pop, function
-    .global     ev_pop
-ev_pop:             // ev_push_back is opposite
-    mov         r0, #000  // test
-    mov         r7, #000
-    bx          lr                  /**<    comment                          */
-    .size       ev_pop, .-ev_pop
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-    .type       ev_alloc, function
-    .global     ev_alloc
-ev_alloc:
-    push        { lr }
-    // check which pool
-    // alloc, return null on empty
-    // fillin defaults (pool/sig/dest/)
-    pop         { pc }
-    .size       ev_alloc, .-ev_alloc
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-    .type       ev_free, function
-    .global     ev_free
-ev_free:
-    push        { lr }
-    // check which pool
-    // free
-    pop         { pc }
-    .size       ev_free, .-ev_free
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
     .type       bad_destination, function
     .global     bad_destination
 bad_destination:
+    led         r6, RED_ON
     /* TODO: log/count, but try to keep operating as best as possible */
     bx          lr
-    .size       bad_destination, .-bad_destination
-# -----------------------------------------------------------------------------
-
-    .set        SM_EV_BLK_WORDSIZE,   (  4)
-    .set        SM_EV_BLK_CNT,        (  2)
-
-    .set        LRG_EV_BLK_WORDSIZE,  (  8)
-    .set        LRG_EV_BLK_CNT,       ( 64)
-
-# -----------------------------------------------------------------------------
-    .section    .bss
-
-    .align      2
-sm_ev_pool_head:
-    .word       0
-lrg_ev_pool_head:
-    .word       0
-
-    .align      2
-sm_ev_pool_start:
-    .skip       ((SM_EV_BLK_WORDSIZE<<2)*SM_EV_BLK_CNT)
-    
-    .align      2
-lrg_ev_pool_start:
-    .skip       ((LRG_EV_BLK_WORDSIZE<<2)*LRG_EV_BLK_CNT)
-
 # -----------------------------------------------------------------------------

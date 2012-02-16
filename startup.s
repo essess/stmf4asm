@@ -1,11 +1,16 @@
+/**
+ * @public
+ *  reset entry point
+ */
 
     .section    .init, "ax"
     .syntax     unified
     .thumb
 
+    .include    "scs.inc"
+
     .set        MAIN_STACK_FILL,    0xaaaaaaaa
     .set        PROCESS_STACK_FILL, 0xbbbbbbbb
-    .set        VTOR,               0xE000ED08
 
 # -----------------------------------------------------------------------------
     .type       reset, function
@@ -13,9 +18,9 @@
 reset:
     ldr         lr, =reset
     bl          pll_init            /**< fire up pll to 168MHz               */
-    movs        r4, r0              /**< save retval for later               */
+    movs        r12, r0              /**< save retval for later               */
 
-    movs        r2, #0              /**< fill byte                           */
+    movs        r2, #0                          /**< filler byte             */
 
     ldr         r0, =__bss_start__
     ldr         r1, =__bss_end__
@@ -76,9 +81,8 @@ reset:
     msr         psp, r0
     mov         r0, #0b010                  /**< switch to the process stack */
     msr         control, r0
-    push        {r4}                        /**< push PLL lockup result ...  */
+    push        {r12}                       /**< push PLL lockup result ...  */
     b           main                        /**< ... never to return         */
-    .size       reset,.-reset
 # -----------------------------------------------------------------------------
 
 /**
@@ -100,7 +104,6 @@ word_blk_fill:
     str         r2, [r0], #4
     b           1b
 1:  bx          lr
-    .size       word_blk_fill,.-word_blk_fill
 # -----------------------------------------------------------------------------
 
 /**
@@ -124,7 +127,6 @@ word_blk_copy:
     str         r3, [r2], #4
     b           1b
 1:  bx          lr
-    .size       word_blk_copy,.-word_blk_copy
 # -----------------------------------------------------------------------------
 
 /**
@@ -146,7 +148,6 @@ byte_blk_fill:
     strb        r2, [r0], #1
     b           1b
 1:  bx          lr
-    .size       byte_blk_fill,.-byte_blk_fill
 # -----------------------------------------------------------------------------
 
 /**
@@ -170,5 +171,4 @@ byte_blk_copy:
     strb        r3, [r2], #1
     b           1b
 1:  bx          lr
-    .size       byte_blk_copy,.-byte_blk_copy
 # -----------------------------------------------------------------------------

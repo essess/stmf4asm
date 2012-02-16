@@ -17,5 +17,4 @@ led_set_state:
     ldr         r1, =GPIOD_BASE
     str         r0, [r1, #GPIO_BSRR_OFFSET]
     bx          lr
-    .size       led_set_state, .-led_set_state
 # -----------------------------------------------------------------------------
