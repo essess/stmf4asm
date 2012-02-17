@@ -1,12 +1,17 @@
 /**
  * @public
- * init STM32F4 Discovery Board LED's to default state of OFF
+ *  init STM32F4 Discovery Board LED's to default state of OFF
+ * params:
+ *  none
+ * retval:
+ *  r10 - contains GPIOD_BASE value
+ * note:
+ *  is threadsafe
  */
     .section    .text
     .syntax     unified
     .thumb
 
-    .include    "rcc.inc"
     .include    "gpio.inc"
     .include    "led.inc"
 
@@ -32,21 +37,17 @@
     .type       led_init, function
     .global     led_init
 led_init:
-    ldr         r0, =RCC_AHB1ENR            /**< enable GPIOD clocking       */
-    ldr         r1, [r0]
-    orr         r1, #(1<<3)
-    str         r1, [r0]
-    ldr         r0, =GPIOD_BASE
-    ldr         r1, =ALL_OFF                /**< drive everything to initial */
-    str         r1, [r0, #GPIO_BSRR_OFFSET] /*   state to avoid glitches     */
-    ldr         r1, [r0, GPIO_PUPDR_OFFSET]
+    ldr         r10, =GPIOD_BASE
+    ldr         r1, =ALL_OFF                 /**< drive everything to initial*/
+    str         r1, [r10, #GPIO_BSRR_OFFSET] /*   state to avoid glitches    */
+    ldr         r1, [r10, GPIO_PUPDR_OFFSET]
     orr         r1, #LED_PUPDR_VALUE            /**< set pull defaults       */
-    str         r1, [r0, GPIO_PUPDR_OFFSET]
-    ldr         r1, [r0, GPIO_OSPEEDR_OFFSET]
+    str         r1, [r10, GPIO_PUPDR_OFFSET]
+    ldr         r1, [r10, GPIO_OSPEEDR_OFFSET]
     orr         r1, LED_OSPEEDR_VALUE           /**< set speed defaults      */
-    str         r1, [r0, GPIO_OSPEEDR_OFFSET]
-    ldr         r1, [r0, GPIO_MODER_OFFSET]
+    str         r1, [r10, GPIO_OSPEEDR_OFFSET]
+    ldr         r1, [r10, GPIO_MODER_OFFSET]
     orr         r1, LED_MODER_VALUE             /**< set to outputs          */
-    str         r1, [r0, GPIO_MODER_OFFSET]
+    str         r1, [r10, GPIO_MODER_OFFSET]
     bx          lr
 # -----------------------------------------------------------------------------
