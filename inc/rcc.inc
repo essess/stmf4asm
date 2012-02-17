@@ -56,23 +56,92 @@
     .set    RCC_AHB1ENR_OFFSET,     RCC_AHB1ENR - RCC_BASE
     .set    AHB1ENR_RESV_MASK,      0b10000001100010111110111000000000
     .set    AHB1ENR_BIC_MASK,       ~AHB1ENR_RESV_MASK
+    .set    OTGHSULPIEN,            (0b1<<30)
+    .set    OTGHSEN,                (0b1<<29)
+    .set    ETHMACPTPEN,            (0b1<<28)
+    .set    ETHMACRXEN,             (0b1<<27)
+    .set    ETHMACTXEN,             (0b1<<26)
+    .set    ETHMACEN,               (0b1<<25)
+    .set    DMA2EN,                 (0b1<<22)
+    .set    DMA1EN,                 (0b1<<21)
+    .set    CCMDATARAMEN,           (0b1<<20)
+    .set    BKPSRAMEN,              (0b1<<18)
+    .set    CRCEN,                  (0b1<<12)
+    .set    GPIOIEN,                (0b1<< 8)
+    .set    GPIOHEN,                (0b1<< 7)
+    .set    GPIOGEN,                (0b1<< 6)
+    .set    GPIOFEN,                (0b1<< 5)
+    .set    GPIOEEN,                (0b1<< 4)
+    .set    GPIODEN,                (0b1<< 3)
+    .set    GPIOCEN,                (0b1<< 2)
+    .set    GPIOBEN,                (0b1<< 1)
+    .set    GPIOAEN,                (0b1<< 0)
 
 # -- AHB2ENR ------------------------------------------------------------------
     .set    RCC_AHB2ENR,            0x40023834
     .set    RCC_AHB2ENR_OFFSET,     RCC_AHB2ENR - RCC_BASE
+    .set    AHB2ENR_RESV_MASK,      0b11111111111111111111111100001110
+    .set    AHB2ENR_BIC_MASK,       ~AHB2ENR_RESV_MASK
+    .set    OTGFSEN,                (0b1<< 7)
+    .set    RNGEN,                  (0b1<< 6)
+    .set    HASHEN,                 (0b1<< 5)
+    .set    CRYPEN,                 (0b1<< 4)
+    .set    DCMIEN,                 (0b1<< 0)
 
 # -- AHB3ENR ------------------------------------------------------------------
     .set    RCC_AHB3ENR,            0x40023838
     .set    RCC_AHB3ENR_OFFSET,     RCC_AHB3ENR - RCC_BASE
+    .set    AHB3ENR_RESV_MASK,      0b11111111111111111111111111111110
+    .set    AHB3ENR_BIC_MASK,       ~AHB3ENR_RESV_MASK
+    .set    FSMCEN,                 (0b1<< 0)
 
 # -- APB1ENR ------------------------------------------------------------------
     .set    RCC_APB1ENR,            0x40023840
     .set    RCC_APB1ENR_OFFSET,     RCC_APB1ENR - RCC_BASE
+    .set    APB1ENR_RESV_MASK,      0b11001001000000010011011000000000
+    .set    APB1ENR_BIC_MASK,       ~APB1ENR_RESV_MASK
+    .set    DACEN,                  (0b1<<29)
+    .set    PWREN,                  (0b1<<28)
+    .set    CAN2EN,                 (0b1<<26)
+    .set    CAN1EN,                 (0b1<<25)
+    .set    I2C3EN,                 (0b1<<23)
+    .set    I2C2EN,                 (0b1<<22)
+    .set    I2C1EN,                 (0b1<<21)
+    .set    UART5EN,                (0b1<<20)
+    .set    UART4EN,                (0b1<<19)
+    .set    UART3EN,                (0b1<<18)
+    .set    UART2EN,                (0b1<<17)
+    .set    SPI3EN,                 (0b1<<15)
+    .set    SPI2EN,                 (0b1<<14)
+    .set    WWDGEN,                 (0b1<<11)
+    .set    TIM14EN,                (0b1<< 8)
+    .set    TIM13EN,                (0b1<< 7)
+    .set    TIM12EN,                (0b1<< 6)
+    .set    TIM7EN,                 (0b1<< 5)
+    .set    TIM6EN,                 (0b1<< 4)
+    .set    TIM5EN,                 (0b1<< 3)
+    .set    TIM4EN,                 (0b1<< 2)
+    .set    TIM3EN,                 (0b1<< 1)
+    .set    TIM2EN,                 (0b1<< 0)
 
 # -- APB2ENR ------------------------------------------------------------------
     .set    RCC_APB2ENR,            0x40023844
     .set    RCC_APB2ENR_OFFSET,     RCC_APB2ENR - RCC_BASE
-
+    .set    APB2ENR_RESV_MASK,      0b11111111111110001010000011001100
+    .set    APB2ENR_BIC_MASK,       ~APB2ENR_RESV_MASK
+    .set    TIM11EN,                (0b1<<18)
+    .set    TIM10EN,                (0b1<<17)
+    .set    TIM9EN,                 (0b1<<16)
+    .set    SYSCFGEN,               (0b1<<14)
+    .set    SPI1EN,                 (0b1<<12)
+    .set    SDIOEN,                 (0b1<<11)
+    .set    ADC3EN,                 (0b1<<10)
+    .set    ADC2EN,                 (0b1<< 9)
+    .set    ADC1EN,                 (0b1<< 8)
+    .set    USART6EN,               (0b1<< 5)
+    .set    USART1EN,               (0b1<< 4)
+    .set    TIM8EN,                 (0b1<< 1)
+    .set    TIM1EN,                 (0b1<< 0)
 
 # -- LPENR --------------------------------------------------------------------
 # -- AHB1LPENR ----------------------------------------------------------------

@@ -43,15 +43,19 @@
     .type       main, function
     .global     main
 main:
+    bl          clk_cfg                 /**< route clocks to peripherals     */
     bl          led_init                /**< init leds                       */
     pop         {r0}                    /**< tos has pll lock result         */
     cmp         r0, #0
     ite         eq
     ldreq       r6, =(GREEN_OFF|RED_ON) /**< show red on lock fail           */
     ldrne       r6, =(GREEN_ON|RED_OFF) /**< green otherwise                 */
-    ldr         r10, =GPIOD_BASE
     str         r6, [r10, #GPIO_BSRR_OFFSET]
     ldr         r9, =evq_cntblk         /**< cache event queue control block */
+    bl          comp_cell_init          /**< use compensation cell           */
+    itt         eq
+    ldreq       r6, =RED_ON             /**< show red on cc !ready           */
+    streq       r6, [r10, #GPIO_BSRR_OFFSET]
     bl          ev_init_sm              /**< init global use event pools     */
     bl          ev_init_lrg
     bl          usbfs_init              /**< usb fullspeed device            */

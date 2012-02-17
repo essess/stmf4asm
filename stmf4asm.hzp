@@ -34,6 +34,8 @@
       <folder Name="usbfs">
         <file file_name="usbfs/usbfs_init.s"/>
       </folder>
+      <file file_name="comp_cell_init.s"/>
+      <file file_name="clk_cfg.s"/>
     </folder>
     <folder Name="System Files">
       <file file_name="$(TargetsDir)/STM32/STM32_Target.js">
