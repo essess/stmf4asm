@@ -36,10 +36,10 @@
     .set        MCO1PRE,                (0b110  << 24)
     .set        I2SSRC,                 (0b0    << 23)
     .set        MCO1,                   (0b00   << 21)
-    .set        RTCPRE,                 (8      << 16)
-    .set        PPRE2,                  (0b100  << 13)
-    .set        PPRE1,                  (0b101  << 10)
-    .set        HPRE,                   (0b0000 <<  4)
+    .set        RTCPRE,                 (8      << 16)  /**< 1MHz      HSE/8 */
+    .set        PPRE2,                  (0b000  << 13)  /**< 84MHz     AHB/1 */
+    .set        PPRE1,                  (0b100  << 10)  /**< 42MHz     AHB/2 */
+    .set        HPRE,                   (0b1000 <<  4)  /**< 84MHz  SYSCLK/2 */
     .set        SWS,                    (0b10   <<  2)
     .set        SW,                     (0b10   <<  0)
     .set        DEFAULT_CFGR_VALUE,     (MCO2|MCO2PRE|MCO1PRE|I2SSRC|MCO1| \
