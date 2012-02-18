@@ -25,6 +25,8 @@
 # -- OTG_FS_GRSTCTL -----------------------------------------------------------
     .set    OTG_FS_GRSTCTL_OFFSET,      0x010
     .set    OTG_FS_GRSTCTL,             OTG_FS_BASE + OTG_FS_GRSTCTL_OFFSET
+    .set    AHBIDL,     (0b1<<31)
+    .set    CSRST,      (0b1<< 0)
 
 # -- OTG_FS_GINTSTS -----------------------------------------------------------
     .set    OTG_FS_GINTSTS_OFFSET,      0x014
@@ -395,264 +397,35 @@
     .set    OTG_FS_PCGCCTL_OFFSET,      0xE00
     .set    OTG_FS_PCGCCTL,             OTG_FS_BASE + OTG_FS_PCGCCTL_OFFSET
 
-
-#        do FIFO's here ? need to figure out what the data sheet is trying to say
-#        it looks like there are 4 endpoints as a device and 8 in host mode ?
-# DFIFO (data fifo)
-# 0x1000
-
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-# -- OTG_FS_ -----------------------------------------------------------
-    .set    OTG_FS__OFFSET,      0x000
-    .set    OTG_FS_,             OTG_FS_BASE + OTG_FS__OFFSET
-
-
-
+# -- DFIFO Region -------------------------------------------------------------
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END0_DFIFO_OFFSET,          0x1000
+    .set    END0_DFIFO,                 OTG_FS_BASE + END0_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END1_DFIFO_OFFSET,          0x2000
+    .set    END1_DFIFO,                 OTG_FS_BASE + END1_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END2_DFIFO_OFFSET,          0x3000
+    .set    END2_DFIFO,                 OTG_FS_BASE + END2_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END3_DFIFO_OFFSET,          0x4000
+    .set    END3_DFIFO,                 OTG_FS_BASE + END3_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END4_DFIFO_OFFSET,          0x5000
+    .set    END4_DFIFO,                 OTG_FS_BASE + END4_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END5_DFIFO_OFFSET,          0x6000
+    .set    END5_DFIFO,                 OTG_FS_BASE + END5_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END6_DFIFO_OFFSET,          0x7000
+    .set    END6_DFIFO,                 OTG_FS_BASE + END6_DFIFO_OFFSET
+
+# -- END0_DFIFO ---------------------------------------------------------------
+    .set    END7_DFIFO_OFFSET,          0x8000
+    .set    END7_DFIFO,                 OTG_FS_BASE + END7_DFIFO_OFFSET

@@ -12,7 +12,6 @@
       <file file_name="main.s"/>
       <file file_name="pll_init.s"/>
       <file file_name="led_init.s"/>
-      <file file_name="led_set_state.s"/>
       <file file_name="systick_init.s"/>
       <file file_name="systick.s"/>
       <folder Name="pool">
@@ -31,11 +30,24 @@
         <file file_name="evq/evq_put.s"/>
         <file file_name="evq/evq_cntblk.s"/>
       </folder>
-      <folder Name="usbfs">
-        <file file_name="usbfs/usbfs_init.s"/>
+      <folder Name="usbfsd">
+        <folder Name="otgfs">
+          <file file_name="usbfsd/otgfs/otgfs_hw_pin_init.s"/>
+          <file file_name="usbfsd/otgfs/otgfs_hw_reset.s"/>
+        </folder>
+        <file file_name="usbfsd/usbfsd_sm_init.s"/>
+        <file file_name="usbfsd/usbfsd_sm_proc.s"/>
+        <file file_name="usbfsd/usbfsd_sm_start.s"/>
       </folder>
       <file file_name="comp_cell_init.s"/>
       <file file_name="clk_cfg.s"/>
+      <folder Name="err">
+        <file file_name="err/err_init.s"/>
+        <file file_name="err/err_pop.s"/>
+        <file file_name="err/err_push.s"/>
+      </folder>
+      <file file_name="app_init.s"/>
+      <file file_name="sys_init.s"/>
     </folder>
     <folder Name="System Files">
       <file file_name="$(TargetsDir)/STM32/STM32_Target.js">
