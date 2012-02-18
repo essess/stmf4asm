@@ -36,6 +36,7 @@
     .thumb
 
     .include    "dest.inc"
+    .include    "err.inc"
     .include    "gpio.inc"
     .include    "led.inc"
 
@@ -43,30 +44,13 @@
     .type       main, function
     .global     main
 main:
-    bl          clk_cfg                 /**< route clocks to peripherals     */
-    bl          led_init                /**< init leds                       */
-    pop         {r0}                    /**< tos has pll lock result         */
-    cmp         r0, #0
-    ite         eq
-    ldreq       r6, =(GREEN_OFF|RED_ON) /**< show red on lock fail           */
-    ldrne       r6, =(GREEN_ON|RED_OFF) /**< green otherwise                 */
-    str         r6, [r10, #GPIO_BSRR_OFFSET]
     ldr         r9, =evq_cntblk         /**< cache event queue control block */
-    bl          comp_cell_init          /**< use compensation cell           */
-    itt         eq
-    ldreq       r6, =RED_ON             /**< show red on cc !ready           */
-    streq       r6, [r10, #GPIO_BSRR_OFFSET]
-    bl          ev_init_sm              /**< init global use event pools     */
-    bl          ev_init_lrg
-    bl          usbfs_init              /**< usb fullspeed device            */
-    bl          systick_init            /**< 1000Hz/1ms                      */
-
-
-    /*        TODO: kick off any other remaining event sources               */
-
-
+    ldr         r10, =GPIOD_BASE        /**< cache LED gpio base             */
+    pop         { r0 }                  /**< tos has pll lock result         */
+    bl          sys_init
+    bl          app_init
 evq_get:                                /**< ~150ns to iterate               */
-    cpsid   i
+    cpsid   i                           /**<                    start atomic */
     ldr         r0, [r9, #+0x08]        /**< grab current evq ev count       */
     cbnz        r0, ev_dispatch         /**<   empty?                        */
     led         r0, BLUE_OFF            /**< yep, work complete              */
@@ -83,7 +67,7 @@ ev_dispatch:
     it          ge
     ldrge       r1, [r9, #+0x10]        /**< correct to buffer start (wrap)  */
     str         r1, [r9, #+0x04]        /**< and write back updated tail     */
-    cpsie       i
+    cpsie       i                       /**<                      end atomic */
     ldr         r8, [r7]                /**< fetch signal field from curr ev */
     ubfx        r0, r8, #16, #10        /**< isolate dest field              */
     cmp         r0, #MAX_DEST           /**< range check                     */
@@ -96,8 +80,8 @@ dest_table:                             /*   about +500ns out from int!      */
     .hword      (dest001-dest_table)>>1
     .hword      (dest002-dest_table)>>1
 dest000: b      bad_destination         /**< unknown/unhandled recipiant     */
-dest001: b      sm_systick              /**< systick timer statemachine      */
-dest002: b      sm_usbfs                /**< usb fullspeed dev sm            */
+dest001: b      systick_sm_proc         /**< systick timer statemachine      */
+dest002: b      usbfsd_sm_proc          /**< usb fullspeed dev sm            */
     .thumb_func
 ev_post_dispatch:                       /**< return ev in r7 back to pool    */
     tst         r8, #(1<<31)            /**< AND against pool field          */
@@ -113,27 +97,20 @@ ev_post_dispatch:                       /**< return ev in r7 back to pool    */
     .type       bad_destination, function
     .global     bad_destination
 bad_destination:
-    led         r6, RED_ON
-    /* TODO: log/count, but try to keep operating as best as possible */
+    ldr         r0, =BAD_DESTINATION
+    bl          err_push
     bx          lr
 # -----------------------------------------------------------------------------
 
+// this will be the one-shot sm - simple placeholder until then
 # -----------------------------------------------------------------------------
-    .type       sm_systick, function
-    .global     sm_systick
-sm_systick:
-    /* systime++ */
-    /* eventually extend out to include a full blown timer system
-       need to so some thinking on it first, I want constant/predictable
-       manipulation. o(1) lookups no matter the size of the timeout list
-       probably not possible and more line o(n) since we need to walk
-       all timers to update them */
-    bx          lr
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
-    .type       sm_usbfs, function
-    .global     sm_usbfs
-sm_usbfs:
+    .type       systick_sm_proc, function
+    .global     systick_sm_proc
+systick_sm_proc:
+    /*
+    ev +4 - timestamp
+    ev +8 - systime
+    ev +C - unused
+    */
     bx          lr
 # -----------------------------------------------------------------------------

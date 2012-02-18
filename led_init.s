@@ -2,11 +2,10 @@
  * @public
  *  init STM32F4 Discovery Board LED's to default state of OFF
  * params:
- *  none
- * retval:
  *  r10 - contains GPIOD_BASE value
+ * retval:
+ *  void
  * note:
- *  is threadsafe
  */
     .section    .text
     .syntax     unified
@@ -33,21 +32,22 @@
     .set    BLUE_MODE,              (MODE_OUT << 30)
     .set    LED_MODER_VALUE,        (ORANGE_MODE|GREEN_MODE|RED_MODE|BLUE_MODE)
 
+    .set    INIT_STATE,             (ORANGE_OFF|GREEN_OFF|RED_OFF|BLUE_ON)
+
 # -----------------------------------------------------------------------------
     .type       led_init, function
     .global     led_init
 led_init:
-    ldr         r10, =GPIOD_BASE
-    ldr         r1, =ALL_OFF                 /**< drive everything to initial*/
-    str         r1, [r10, #GPIO_BSRR_OFFSET] /*   state to avoid glitches    */
-    ldr         r1, [r10, GPIO_PUPDR_OFFSET]
-    orr         r1, #LED_PUPDR_VALUE            /**< set pull defaults       */
-    str         r1, [r10, GPIO_PUPDR_OFFSET]
-    ldr         r1, [r10, GPIO_OSPEEDR_OFFSET]
-    orr         r1, LED_OSPEEDR_VALUE           /**< set speed defaults      */
-    str         r1, [r10, GPIO_OSPEEDR_OFFSET]
-    ldr         r1, [r10, GPIO_MODER_OFFSET]
-    orr         r1, LED_MODER_VALUE             /**< set to outputs          */
-    str         r1, [r10, GPIO_MODER_OFFSET]
+    ldr         r0, =INIT_STATE              /**< drive everything to initial*/
+    str         r0, [r10, #GPIO_BSRR_OFFSET] /*   state to avoid glitches    */
+    ldr         r0, [r10, GPIO_PUPDR_OFFSET]
+    orr         r0, #LED_PUPDR_VALUE            /**< set pull defaults       */
+    str         r0, [r10, GPIO_PUPDR_OFFSET]
+    ldr         r0, [r10, GPIO_OSPEEDR_OFFSET]
+    orr         r0, LED_OSPEEDR_VALUE           /**< set speed defaults      */
+    str         r0, [r10, GPIO_OSPEEDR_OFFSET]
+    ldr         r0, [r10, GPIO_MODER_OFFSET]
+    orr         r0, LED_MODER_VALUE             /**< set to outputs          */
+    str         r0, [r10, GPIO_MODER_OFFSET]
     bx          lr
 # -----------------------------------------------------------------------------

@@ -15,7 +15,7 @@
     .set PRI,       (0xF0)
 
     .set FCLK,      (168000000)
-    .set HZ,        (1000)
+    .set HZ,        (200)
     .set RVR,       (((FCLK/8)/HZ)-1)
 
     .set CLKSOURCE, (0b0<<2)    /**< FCLK/8 */
