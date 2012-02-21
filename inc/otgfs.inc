@@ -17,6 +17,7 @@
 # -- OTG_FS_GAHBCFG -----------------------------------------------------------
     .set    OTG_FS_GAHBCFG_OFFSET,      0x008
     .set    OTG_FS_GAHBCFG,             OTG_FS_BASE + OTG_FS_GAHBCFG_OFFSET
+    .set    GINTMSK,                    (0b1<<0)
 
 # -- OTG_FS_GUSBCFG -----------------------------------------------------------
     .set    OTG_FS_GUSBCFG_OFFSET,      0x00C
@@ -248,6 +249,7 @@
 # -- OTG_FS_DCTL --------------------------------------------------------------
     .set    OTG_FS_DCTL_OFFSET,         0x804
     .set    OTG_FS_DCTL,                OTG_FS_BASE + OTG_FS_DCTL_OFFSET
+    .set    SDIS,                       (0b1<<1)
 
 # -- OTG_FS_DSTS --------------------------------------------------------------
     .set    OTG_FS_DSTS_OFFSET,         0x808
