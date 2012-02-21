@@ -17,6 +17,7 @@
 usbfsd_sm_start:
     push        { lr }
     bl          otgfs_hw_pin_init
+/* TODO: setup nvic */
     bl          usbfsd_sm_init
     pop         { pc }
 # -----------------------------------------------------------------------------
