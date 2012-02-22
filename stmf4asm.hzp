@@ -38,6 +38,8 @@
         <file file_name="usbfsd/usbfsd_sm_init.s"/>
         <file file_name="usbfsd/usbfsd_sm_proc.s"/>
         <file file_name="usbfsd/usbfsd_sm_start.s"/>
+        <file file_name="usbfsd/otgfsg.s"/>
+        <file file_name="usbfsd/usbfsd_nvic_init.s"/>
       </folder>
       <file file_name="comp_cell_init.s"/>
       <file file_name="clk_cfg.s"/>

@@ -468,6 +468,7 @@
     .set NVIC_IP65,     NVIC_IPR16 + 1
     .set NVIC_IP66,     NVIC_IPR16 + 2
     .set NVIC_IP67,     NVIC_IPR16 + 3
+    .set NVIC_IP67_OFF, NVIC_IPR16_OFFSET + 3
 
     .set NVIC_IPR17,    SCS_BASE + NVIC_IPR17_OFFSET
     .set NVIC_IP68,     NVIC_IPR17 + 0
