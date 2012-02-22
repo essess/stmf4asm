@@ -32,10 +32,61 @@
 # -- OTG_FS_GINTSTS -----------------------------------------------------------
     .set    OTG_FS_GINTSTS_OFFSET,      0x014
     .set    OTG_FS_GINTSTS,             OTG_FS_BASE + OTG_FS_GINTSTS_OFFSET
+    .set    WKUPINT,    (0b1<<31)       /**< device & host               w1c */
+    .set    SRQINT,     (0b1<<30)       /**< device & host               w1c */
+    .set    DISCINT,    (0b1<<29)       /**<          host               w1c */
+    .set    CIDSCHG,    (0b1<<28)       /**< device & host               w1c */
+    .set    PTXFE,      (0b1<<26)       /**<          host               ro  */
+    .set    HCINT,      (0b1<<25)       /**<          host               ro  */
+    .set    HPRTINT,    (0b1<<24)       /**<          host               ro  */
+    .set    IPXFR,      (0b1<<21)       /**<          host               w1c */
+    .set    IISOOXFR,   (0b1<<21)       /**< device                      w1c */
+    .set    IISOIXFR,   (0b1<<20)       /**< device                      w1c */
+    .set    OEPINT,     (0b1<<19)       /**< device                      ro  */
+    .set    IEPINT,     (0b1<<18)       /**< device                      ro  */
+    .set    EOPF,       (0b1<<15)       /**< device                      w1c */
+    .set    ISOODRP,    (0b1<<14)       /**< device                      w1c */
+    .set    ENUMDNE,    (0b1<<13)       /**< device                      w1c */
+    .set    USBRST,     (0b1<<12)       /**< device                      w1c */
+    .set    USBSUSP,    (0b1<<11)       /**< device                      w1c */
+    .set    ESUSP,      (0b1<<10)       /**< device                      w1c */
+    .set    GONAKEFF,   (0b1<< 7)       /**< device                      ro  */
+    .set    GINAKEFF,   (0b1<< 6)       /**< device                      ro  */
+    .set    NPTXFE,     (0b1<< 5)       /**<          host               ro  */
+    .set    RXFLVL,     (0b1<< 4)       /**< device & host               ro  */
+    .set    SOF,        (0b1<< 3)       /**< device & host               w1c */
+    .set    OTGINT,     (0b1<< 2)       /**< device & host               ro  */
+    .set    MMIS,       (0b1<< 1)       /**< device & host               w1c */
+    .set    CMOD,       (0b1<< 0)       /**< device & host               ro  */
 
 # -- OTG_FS_GINTMSK -----------------------------------------------------------
     .set    OTG_FS_GINTMSK_OFFSET,      0x018
     .set    OTG_FS_GINTMSK,             OTG_FS_BASE + OTG_FS_GINTMSK_OFFSET
+    .set    WUIM,       (0b1<<31)       /**< device & host               rw  */
+    .set    SRQIM,      (0b1<<30)       /**< device & host               rw  */
+    .set    DISCINTM,   (0b1<<29)       /**<          host               rw  */
+    .set    CIDSCHGM,   (0b1<<28)       /**< device & host               rw  */
+    .set    PTXFEM,     (0b1<<26)       /**<          host               rw  */
+    .set    HCIM,       (0b1<<25)       /**<          host               rw  */
+    .set    PRTIM,      (0b1<<24)       /**<          host               ro  */
+    .set    IPXFRM,     (0b1<<21)       /**<          host               rw  */
+    .set    IISOOXFRM,  (0b1<<21)       /**< device                      rw  */
+    .set    IISOIXFRM,  (0b1<<20)       /**< device                      rw  */
+    .set    OEPINTM,    (0b1<<19)       /**< device                      rw  */
+    .set    IEPINTM,    (0b1<<18)       /**< device                      rw  */
+    .set    EOPFM,      (0b1<<15)       /**< device                      rw  */
+    .set    ISOODRPM,   (0b1<<14)       /**< device                      rw  */
+    .set    ENUMDNEM,   (0b1<<13)       /**< device                      rw  */
+    .set    USBRSTM,    (0b1<<12)       /**< device                      rw  */
+    .set    USBSUSPM,   (0b1<<11)       /**< device                      rw  */
+    .set    ESUSPM,     (0b1<<10)       /**< device                      rw  */
+    .set    GONAKEFFM,  (0b1<< 7)       /**< device                      rw  */
+    .set    GINAKEFFM,  (0b1<< 6)       /**< device                      rw  */
+    .set    NPTXFEM,    (0b1<< 5)       /**<          host               rw  */
+    .set    RXFLVLM,    (0b1<< 4)       /**< device & host               rw  */
+    .set    SOFM,       (0b1<< 3)       /**< device & host               rw  */
+    .set    OTGINTM,    (0b1<< 2)       /**< device & host               rw  */
+    .set    MMISM,      (0b1<< 1)       /**< device & host               rw  */
 
 # -- OTG_FS_GRXSTSR -----------------------------------------------------------
     .set    OTG_FS_GRXSTSR_OFFSET,      0x01C

@@ -19,7 +19,7 @@
 
     .set IDLE_TIMEOUT,  100     /**< ~50us                                   */
     .set CRST_TIMEOUT,  100     /**< ~50us                                   */
-    .set PHY_SYNC_WAIT, 20      /**< ~?us 3 PHY clk's @ 48MHz minimum (62ns) */
+    .set PHY_SYNC_WAIT, 20      /**< ~10us 3 PHY clk's @ 48MHz minimum (62ns)*/
 
     .set BIC_GUSBCFG_MASK,      0b00000000000000000011110000000111
     .set PHYSEL,                (0b1 <<  7)
@@ -31,13 +31,17 @@
     .set GINTSTS_CLR,           0b11110000001100001111110000001010
 
     .set VBUSBEN,               (0b1 << 19)
-    .set GCCFG_DEFAULT,         ( VBUSBEN )
+    .set PWRDWN,                (0b1 << 16)
+    .set GCCFG_DEFAULT,         ( VBUSBEN | PWRDWN )
 
-    .set SRQIM,                 (0b1 << 30) /**< detect vbus presence        */
-    .set USBRSTM,               (0b1 << 12) /**< detect line reset           */
-    .set OTGINTM,               (0b1 <<  2) /**< detect vbus absence         */
-    /* TODO: endpoint int's when we get that far */
-    .set GINTMSK_DEFAULT,       ( SRQIM | USBRSTM | OTGINTM )
+    /* SRQIM:       detect vbus presence                                     */
+    /* OEPINTM:     OUT endpoint                                             */
+    /* IEPINTM:     IN enpoint                                               */
+    /* ENUMDNEM:    detect when line spd enum is complete                    */
+    /* USBRSTM:     detect when hub applies a line reset                     */
+    /* OTGINTM:     detect vbus absence                                      */
+    .set GINTMSK_DEFAULT,       ( SRQIM | ENUMDNEM \
+                                  | USBRSTM | OTGINTM )
 
 # -----------------------------------------------------------------------------
     .type       otgfs_hw_reset, function
@@ -48,9 +52,7 @@ otgfs_hw_reset:
     movs        r0, #CRST_TIMEOUT       /**< core reset                      */
     movs        r1, #CSRST
     str         r1, [r3, #OTG_FS_GRSTCTL_OFFSET]
-1:  cmp         r0, #0                  /**< wait for reset to complete      */
-    it          eq
-    beq         usbfs_init_err
+1:  cbz         r0, usbfs_init_err      /**< wait for reset to complete      */
     ldr         r1, [r3, #OTG_FS_GRSTCTL_OFFSET]
     tst         r1, #CSRST              /**< CSRST clear?                    */
     itt         ne                      /*     reset incomplete              */
@@ -58,9 +60,7 @@ otgfs_hw_reset:
     bne         1b                      /*     try again                     */
 
     movs        r0, #IDLE_TIMEOUT       /**< wait for AHB to idle            */
-1:  cmp         r0, #0
-    it          eq
-    beq         usbfs_init_err
+1:  cbz         r0, usbfs_init_err      
     ldr         r1, [r3, #OTG_FS_GRSTCTL_OFFSET]
     tst         r1, #AHBIDL
     itt         eq
@@ -104,32 +104,6 @@ otgfs_hw_reset:
     str         r0, [r3, #OTG_FS_GAHBCFG_OFFSET]
 
 /* if a cable is plugged in at this point, you will get an interrupt immediately */
-
-    nop
-
-// if we're already connected .. SRQINT should be set in GINTSTS
-// if not, it'll be set as soon as someone plugs in .. we are now
-// in the powered state when we get that int .. in the int, we want to
-// setup for the transition to the default state by attaching the d+ pullup
-// to get us recognized by the hub.
-//
-// a USBRST takes us to the default state. we should be getting endpoint
-// interrupts shortly after this point. setup the control endpoint here
-// and transition to the default state. BEWARE - sometimes windows does
-// a double reset and we should be prepared to handle that .. so .. 
-// on entry to reset, tear down ALL fifo's to default state (flush them too)
-// and then setup the control endpoint
-//
-// from here on out, the usb chap 9 spec carries us through the rest of the states
-//
-
-
-
-// setup (start at pg1020)
-
-
-
-/* unmask later */
 
 usbfs_init_err:
     bx          lr

@@ -349,12 +349,47 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File10]
-DataLen=574
+DataLen=767
 TopLine=0
-SelStart=437
-SelStop=437
+SelStart=121
+SelStop=121
 RectSel=0
-CaretPos=437
+CaretPos=121
+CaretVisible=1
+TopLineAlt=0
+SelStartAlt=0
+SelStopAlt=0
+RectSelAlt=0
+CaretPosAlt=0
+CaretVisibleAlt=0
+BookmarkCount=1
+Folding=
+FileType=*
+DataFormat=win1252
+AutoIndent=0
+NumberLines=0
+WordWrapIndent=0
+NumberColumns=0
+ShowSpaces=0
+ShowLineBreaks=0
+LiveSpell=0
+WrapPos=-2
+RecordSize=-2
+HexEditor=0
+HexSections=-2
+ProjectStatus=1
+RelativeFilename=usbfsd\usbfsd_sm_start.s
+Filename=Z:\stmf4asm_rowley\usbfsd\usbfsd_sm_start.s
+FTPFilename=
+ForcedReadOnly=0
+
+[File11]
+DataLen=852
+TopLine=0
+SelStart=652
+SelStop=652
+RectSel=0
+CaretPos=652
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -378,18 +413,18 @@ RecordSize=-2
 HexEditor=0
 HexSections=-2
 ProjectStatus=0
-RelativeFilename=usbfsd\usbfsd_sm_start.s
-Filename=Z:\stmf4asm_rowley\usbfsd\usbfsd_sm_start.s
+RelativeFilename=usbfsd\usbfsd_nvic_init.s
+Filename=Z:\stmf4asm_rowley\usbfsd\usbfsd_nvic_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File11]
+[File12]
 DataLen=1356
-TopLine=4
-SelStart=961
-SelStop=961
+TopLine=8
+SelStart=446
+SelStop=446
 RectSel=0
-CaretPos=961
+CaretPos=446
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -418,13 +453,13 @@ Filename=Z:\stmf4asm_rowley\usbfsd\usbfsd_sm_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File12]
-DataLen=5303
-TopLine=93
-SelStart=4298
-SelStop=4298
+[File13]
+DataLen=4613
+TopLine=13
+SelStart=1694
+SelStop=1694
 RectSel=0
-CaretPos=4298
+CaretPos=1694
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -453,7 +488,7 @@ Filename=Z:\stmf4asm_rowley\usbfsd\otgfs\otgfs_hw_reset.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File13]
+[File14]
 DataLen=2521
 TopLine=25
 SelStart=340
@@ -488,7 +523,7 @@ Filename=Z:\stmf4asm_rowley\usbfsd\otgfs\otgfs_hw_pin_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File14]
+[File15]
 DataLen=647
 TopLine=0
 SelStart=546
@@ -523,7 +558,7 @@ Filename=Z:\stmf4asm_rowley\err\err_push.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File15]
+[File16]
 DataLen=475
 TopLine=0
 SelStart=394
@@ -558,7 +593,7 @@ Filename=Z:\stmf4asm_rowley\err\err_pop.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File16]
+[File17]
 DataLen=478
 TopLine=0
 SelStart=397
@@ -593,7 +628,7 @@ Filename=Z:\stmf4asm_rowley\err\err_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File17]
+[File18]
 DataLen=931
 TopLine=0
 SelStart=931
@@ -628,7 +663,7 @@ Filename=Z:\stmf4asm_rowley\inc\err.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File18]
+[File19]
 DataLen=1118
 TopLine=1
 SelStart=388
@@ -663,7 +698,7 @@ Filename=Z:\stmf4asm_rowley\comp_cell_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File19]
+[File20]
 DataLen=993
 TopLine=0
 SelStart=420
@@ -698,7 +733,7 @@ Filename=Z:\stmf4asm_rowley\inc\syscfg.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File20]
+[File21]
 DataLen=2440
 TopLine=0
 SelStart=114
@@ -733,7 +768,7 @@ Filename=Z:\stmf4asm_rowley\clk_cfg.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File21]
+[File22]
 DataLen=8713
 TopLine=63
 SelStart=3988
@@ -768,13 +803,13 @@ Filename=Z:\stmf4asm_rowley\inc\rcc.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File22]
-DataLen=22393
-TopLine=0
-SelStart=875
-SelStop=882
+[File23]
+DataLen=26524
+TopLine=16
+SelStart=2141
+SelStop=2141
 RectSel=0
-CaretPos=882
+CaretPos=2141
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -803,14 +838,14 @@ Filename=Z:\stmf4asm_rowley\inc\otgfs.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File23]
-DataLen=22553
-TopLine=289
-SelStart=13630
-SelStop=13630
+[File24]
+DataLen=22600
+TopLine=334
+SelStart=11759
+SelStop=11776
 RectSel=0
-CaretPos=13630
-CaretVisible=1
+CaretPos=11776
+CaretVisible=0
 TopLineAlt=0
 SelStartAlt=0
 SelStopAlt=0
@@ -838,7 +873,7 @@ Filename=Z:\stmf4asm_rowley\inc\scs.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File24]
+[File25]
 DataLen=305
 TopLine=0
 SelStart=95
@@ -873,7 +908,7 @@ Filename=Z:\stmf4asm_rowley\inc\dest.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File25]
+[File26]
 DataLen=1893
 TopLine=0
 SelStart=0
@@ -908,7 +943,7 @@ Filename=Z:\stmf4asm_rowley\inc\flash.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File26]
+[File27]
 DataLen=10220
 TopLine=0
 SelStart=944
@@ -943,7 +978,7 @@ Filename=Z:\stmf4asm_rowley\inc\gpio.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File27]
+[File28]
 DataLen=951
 TopLine=0
 SelStart=703
@@ -978,7 +1013,7 @@ Filename=Z:\stmf4asm_rowley\inc\led.inc
 FTPFilename=
 ForcedReadOnly=0
 
-[File28]
+[File29]
 DataLen=2527
 TopLine=6
 SelStart=626
@@ -1013,7 +1048,7 @@ Filename=Z:\stmf4asm_rowley\systick.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File29]
+[File30]
 DataLen=1797
 TopLine=0
 SelStart=866
@@ -1048,7 +1083,7 @@ Filename=Z:\stmf4asm_rowley\evq\evq_put.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File30]
+[File31]
 DataLen=861
 TopLine=0
 SelStart=504
@@ -1083,7 +1118,7 @@ Filename=Z:\stmf4asm_rowley\ev\ev_alloc_sm.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File31]
+[File32]
 DataLen=1130
 TopLine=0
 SelStart=758
@@ -1118,7 +1153,7 @@ Filename=Z:\stmf4asm_rowley\ev\ev_destroy.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File32]
+[File33]
 DataLen=865
 TopLine=0
 SelStart=483
@@ -1153,7 +1188,7 @@ Filename=Z:\stmf4asm_rowley\ev\ev_alloc_lrg.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File33]
+[File34]
 DataLen=1239
 TopLine=4
 SelStart=360
@@ -1188,7 +1223,7 @@ Filename=Z:\stmf4asm_rowley\ev\ev_init_sm.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File34]
+[File35]
 DataLen=1252
 TopLine=4
 SelStart=313
@@ -1223,7 +1258,7 @@ Filename=Z:\stmf4asm_rowley\ev\ev_init_lrg.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File35]
+[File36]
 DataLen=2235
 TopLine=16
 SelStart=1489
@@ -1258,7 +1293,7 @@ Filename=Z:\stmf4asm_rowley\led_init.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File36]
+[File37]
 DataLen=3656
 TopLine=0
 SelStart=2742
@@ -1293,13 +1328,48 @@ Filename=Z:\stmf4asm_rowley\section_placement.xml
 FTPFilename=
 ForcedReadOnly=0
 
-[File37]
+[File38]
 DataLen=527
 TopLine=0
-SelStart=0
-SelStop=527
+SelStart=127
+SelStop=127
 RectSel=0
-CaretPos=239
+CaretPos=127
+CaretVisible=1
+TopLineAlt=0
+SelStartAlt=0
+SelStopAlt=0
+RectSelAlt=0
+CaretPosAlt=0
+CaretVisibleAlt=0
+BookmarkCount=1
+Folding=
+FileType=*
+DataFormat=win1252
+AutoIndent=0
+NumberLines=0
+WordWrapIndent=0
+NumberColumns=0
+ShowSpaces=0
+ShowLineBreaks=0
+LiveSpell=0
+WrapPos=-2
+RecordSize=-2
+HexEditor=0
+HexSections=-2
+ProjectStatus=0
+RelativeFilename=template.s
+Filename=Z:\stmf4asm_rowley\template.s
+FTPFilename=
+ForcedReadOnly=0
+
+[File39]
+DataLen=15254
+TopLine=66
+SelStart=6521
+SelStop=6521
+RectSel=0
+CaretPos=6521
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -1323,19 +1393,19 @@ RecordSize=-2
 HexEditor=0
 HexSections=-2
 ProjectStatus=1
-RelativeFilename=template.s
-Filename=Z:\stmf4asm_rowley\template.s
+RelativeFilename=vectors.s
+Filename=Z:\stmf4asm_rowley\vectors.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File38]
-DataLen=15254
-TopLine=6
-SelStart=7226
-SelStop=7180
+[File40]
+DataLen=2538
+TopLine=19
+SelStart=717
+SelStop=717
 RectSel=0
-CaretPos=7180
-CaretVisible=0
+CaretPos=717
+CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
 SelStopAlt=0
@@ -1358,12 +1428,12 @@ RecordSize=-2
 HexEditor=0
 HexSections=-2
 ProjectStatus=0
-RelativeFilename=vectors.s
-Filename=Z:\stmf4asm_rowley\vectors.s
+RelativeFilename=usbfsd\otgfsg.s
+Filename=Z:\stmf4asm_rowley\usbfsd\otgfsg.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File39]
+[File41]
 DataLen=1396
 TopLine=0
 SelStart=191
@@ -1398,13 +1468,13 @@ Filename=Z:\stmf4asm_rowley\evq\evq_cntblk.s
 FTPFilename=
 ForcedReadOnly=0
 
-[File40]
-DataLen=1154
+[File42]
+DataLen=1157
 TopLine=0
-SelStart=381
-SelStop=381
+SelStart=276
+SelStop=276
 RectSel=0
-CaretPos=381
+CaretPos=276
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -1433,11 +1503,46 @@ Filename=Z:\stmf4asm_rowley\systick_init.s
 FTPFilename=
 ForcedReadOnly=0
 
+[File43]
+DataLen=318
+TopLine=0
+SelStart=318
+SelStop=318
+RectSel=0
+CaretPos=318
+CaretVisible=1
+TopLineAlt=0
+SelStartAlt=0
+SelStopAlt=0
+RectSelAlt=0
+CaretPosAlt=0
+CaretVisibleAlt=0
+BookmarkCount=1
+Folding=
+FileType=txt
+DataFormat=win1252
+AutoIndent=0
+NumberLines=0
+WordWrapIndent=0
+NumberColumns=0
+ShowSpaces=0
+ShowLineBreaks=0
+LiveSpell=0
+WrapPos=-2
+RecordSize=-2
+HexEditor=0
+HexSections=-2
+ProjectStatus=1
+RelativeFilename=nvic_priorities.txt
+Filename=Z:\stmf4asm_rowley\nvic_priorities.txt
+FTPFilename=
+ForcedReadOnly=0
+
 [EditPad Project]
 Managed=1
 BookmarksProjectWide=0
 ClipCollection=C:\Users\Sean\Documents\ARM.atc
-TabIndex=23
-FileCount=41
+TabIndex=40
+FileCount=44
 RemovedCount=0
 

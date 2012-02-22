@@ -1,6 +1,7 @@
 /**
  * @public
- *  one time statemachine initialization
+ *  one time statemachine initialization - the
+ *  initial transition
  * params:
  *  none
  * retval:
@@ -17,7 +18,7 @@
 usbfsd_sm_start:
     push        { lr }
     bl          otgfs_hw_pin_init
-/* TODO: setup nvic */
-    bl          usbfsd_sm_init
-    pop         { pc }
+    bl          usbfsd_nvic_init       /**< interrupts are unmasked on exit! */
+    bl          usbfsd_sm_init         /**< GINT unmasked on exit! an int    */
+    pop         { pc }                 /*   could occur before returning!    */
 # -----------------------------------------------------------------------------
