@@ -209,12 +209,12 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File6]
-DataLen=5469
-TopLine=54
-SelStart=2654
-SelStop=2654
+DataLen=5811
+TopLine=97
+SelStart=5344
+SelStop=5344
 RectSel=0
-CaretPos=2654
+CaretPos=5344
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -386,10 +386,10 @@ ForcedReadOnly=0
 [File11]
 DataLen=852
 TopLine=0
-SelStart=652
-SelStop=652
+SelStart=284
+SelStop=284
 RectSel=0
-CaretPos=652
+CaretPos=284
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -455,11 +455,11 @@ ForcedReadOnly=0
 
 [File13]
 DataLen=4613
-TopLine=13
-SelStart=1694
-SelStop=1694
+TopLine=9
+SelStart=1012
+SelStop=1012
 RectSel=0
-CaretPos=1694
+CaretPos=1012
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -805,11 +805,11 @@ ForcedReadOnly=0
 
 [File23]
 DataLen=26524
-TopLine=16
-SelStart=2141
-SelStop=2141
+TopLine=25
+SelStart=2655
+SelStop=2655
 RectSel=0
-CaretPos=2141
+CaretPos=2655
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -840,11 +840,11 @@ ForcedReadOnly=0
 
 [File24]
 DataLen=22600
-TopLine=334
-SelStart=11759
-SelStop=11776
+TopLine=314
+SelStart=15646
+SelStop=15646
 RectSel=0
-CaretPos=11776
+CaretPos=15646
 CaretVisible=0
 TopLineAlt=0
 SelStartAlt=0
@@ -1400,12 +1400,12 @@ ForcedReadOnly=0
 
 [File40]
 DataLen=2538
-TopLine=19
-SelStart=717
-SelStop=717
+TopLine=0
+SelStart=2033
+SelStop=2033
 RectSel=0
-CaretPos=717
-CaretVisible=1
+CaretPos=2033
+CaretVisible=0
 TopLineAlt=0
 SelStartAlt=0
 SelStopAlt=0
@@ -1469,7 +1469,7 @@ FTPFilename=
 ForcedReadOnly=0
 
 [File42]
-DataLen=1157
+DataLen=1156
 TopLine=0
 SelStart=276
 SelStop=276
@@ -1497,19 +1497,19 @@ WrapPos=-2
 RecordSize=-2
 HexEditor=0
 HexSections=-2
-ProjectStatus=1
+ProjectStatus=0
 RelativeFilename=systick_init.s
 Filename=Z:\stmf4asm_rowley\systick_init.s
 FTPFilename=
 ForcedReadOnly=0
 
 [File43]
-DataLen=318
+DataLen=343
 TopLine=0
-SelStart=318
-SelStop=318
+SelStart=229
+SelStop=229
 RectSel=0
-CaretPos=318
+CaretPos=229
 CaretVisible=1
 TopLineAlt=0
 SelStartAlt=0
@@ -1532,7 +1532,7 @@ WrapPos=-2
 RecordSize=-2
 HexEditor=0
 HexSections=-2
-ProjectStatus=1
+ProjectStatus=0
 RelativeFilename=nvic_priorities.txt
 Filename=Z:\stmf4asm_rowley\nvic_priorities.txt
 FTPFilename=
@@ -1542,7 +1542,7 @@ ForcedReadOnly=0
 Managed=1
 BookmarksProjectWide=0
 ClipCollection=C:\Users\Sean\Documents\ARM.atc
-TabIndex=40
+TabIndex=11
 FileCount=44
 RemovedCount=0
 

@@ -12,7 +12,7 @@
 
     .include    "scs.inc"
 
-    .set PRI,       (15 << 4)
+    .set PRI,       (0 << 4)
 
     .set FCLK,      (168000000)
     .set HZ,        (200)

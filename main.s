@@ -42,6 +42,7 @@
 
 # -----------------------------------------------------------------------------
     .type       main, function
+    .type       ev_post_dispatch, function
     .global     main
 main:
     ldr         r9, =evq_cntblk         /**< cache event queue control block */
@@ -82,7 +83,6 @@ dest_table:                             /*   about +500ns out from int!      */
 dest000: b      bad_destination         /**< unknown/unhandled recipiant     */
 dest001: b      systick_sm_proc         /**< systick timer statemachine      */
 dest002: b      usbfsd_sm_proc          /**< usb fullspeed dev sm            */
-    .thumb_func
 ev_post_dispatch:                       /**< return ev in r7 back to pool    */
     tst         r8, #(1<<31)            /**< AND against pool field          */
     ite         eq                      /**< 0 cycle fold advantage          */
@@ -112,5 +112,20 @@ systick_sm_proc:
     ev +8 - systime
     ev +C - unused
     */
+
+    // quick modulo test
+    // generic modulo alg:
+    //      a % b = a-((a/b)*b)
+
+    .macro  modulo  ans, a, b, tmp
+    udiv        \tmp, \a, \b
+    mls         \ans, \b, \tmp, \a
+    .endm
+
+
+    nop         // load up r0,r1
+    modulo      r0, r0, r1, r2
+    nop         // check result in r0
+
     bx          lr
 # -----------------------------------------------------------------------------
