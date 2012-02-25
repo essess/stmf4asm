@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.3">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>480</x>
+      <y>128</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>ATTACHED
+--
+/entry: unmask srqint
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>752</x>
+      <y>128</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>POWERED
+--
+/entry: enable p/u</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>480</x>
+      <y>264</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>RESET
+--
+/entry:
+reset all endpoints
+enable ep 0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>480</x>
+      <y>408</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>DEFAULT
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>472</x>
+      <y>664</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>CONFIGURED
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>480</x>
+      <y>536</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>ADDRESSED
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>64</x>
+      <y>120</y>
+      <w>168</w>
+      <h>74</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+/usbfsd_sm_start
+/create lockout_entry</panel_attributes>
+    <additional_attributes>152;40;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InitialState</type>
+    <coordinates>
+      <x>80</x>
+      <y>152</y>
+      <w>16</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>600</x>
+      <y>120</y>
+      <w>168</w>
+      <h>74</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+SRQINT
+/create powered_entry</panel_attributes>
+    <additional_attributes>152;40;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>784</x>
+      <y>192</y>
+      <w>90</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>USBRST</panel_attributes>
+    <additional_attributes>48;120;48;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>528</x>
+      <y>472</y>
+      <w>40</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;64;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>496</x>
+      <y>328</y>
+      <w>102</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+ENUMDNE</panel_attributes>
+    <additional_attributes>56;80;56;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>192</y>
+      <w>40</w>
+      <h>536</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;520</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>32</y>
+      <w>576</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+OTGINT.SEDET
+/mask irq
+/create lockout_entry</panel_attributes>
+    <additional_attributes>24;96;24;40;560;40;560;96</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>672</y>
+      <w>224</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+OTGINT.SEDET
+/mask irq
+/create lockout_entry</panel_attributes>
+    <additional_attributes>24;40;208;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>544</y>
+      <w>232</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+OTGINT.SEDET
+/mask irq
+/create lockout_entry</panel_attributes>
+    <additional_attributes>24;40;216;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>416</y>
+      <w>232</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+OTGINT.SEDET
+/mask irq
+/create lockout_entry</panel_attributes>
+    <additional_attributes>24;40;216;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>264</x>
+      <y>272</y>
+      <w>232</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+OTGINT.SEDET
+/mask irq
+/create lockout_entry</panel_attributes>
+    <additional_attributes>24;40;216;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>600</x>
+      <y>288</y>
+      <w>248</w>
+      <h>440</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;232;24;232;424</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>592</x>
+      <y>672</y>
+      <w>256</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+USBRST</panel_attributes>
+    <additional_attributes>240;40;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>600</x>
+      <y>544</y>
+      <w>248</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+USBRST</panel_attributes>
+    <additional_attributes>232;40;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>600</x>
+      <y>416</y>
+      <w>248</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+USBRST</panel_attributes>
+    <additional_attributes>232;40;24;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>480</x>
+      <y>600</y>
+      <w>40</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;64;24;24</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>560</x>
+      <y>600</y>
+      <w>40</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>24;24;24;64</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>216</x>
+      <y>128</y>
+      <w>144</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>LOCKOUT
+--
+/entry: start one-shot	
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>336</x>
+      <y>120</y>
+      <w>160</w>
+      <h>74</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+TIMEOUT
+/create attached_entry</panel_attributes>
+    <additional_attributes>144;40;24;40</additional_attributes>
+  </element>
+</diagram>
