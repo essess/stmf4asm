@@ -29,7 +29,7 @@
     .set        LOCK_TIMEOUT,           (350*10)  /**< ~220us per datasheet  */
 
     .set        FLUSH_ID_LINES,         (DCRST|ICRST)
-    .set        DEFAULT_ACR_VALUE,      (DCEN|ICEN|PRFTEN|WS5)
+    .set        DEFAULT_ACR_VALUE,      (DCEN|ICEN|PRFTEN|WS2)
 
     .set        MCO2,                   (0b11   << 30)
     .set        MCO2PRE,                (0b110  << 27)

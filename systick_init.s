@@ -1,9 +1,9 @@
 /**
  * @public
- * initialize and unmask systick to 1000Hz
- * assumes clk freq is sysclk/8, 
+ * initialize and unmask systick
+ * assumes clk freq is FCLK/8, 
  * assume:
- *   -FCLK is 168MHz
+ *   -FCLK is (168/2)MHz
  *   -{ r0, r1 } clobbered
  */
     .section    .text
@@ -14,7 +14,7 @@
 
     .set PRI,       (0 << 4)
 
-    .set FCLK,      (168000000)
+    .set FCLK,      (84000000)
     .set HZ,        (200)
     .set RVR,       (((FCLK/8)/HZ)-1)
 
