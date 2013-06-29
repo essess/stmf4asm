@@ -1,7 +1,8 @@
-/**
- * @public
- *  reset entry point
- */
+# -----------------------------------------------------------------------------
+# Copyright (c) 2012, Sean Stasiak. All rights reserved.
+# Developed by: Sean Stasiak <sstasiak@gmail.com>
+# Refer to license terms in README file
+# -----------------------------------------------------------------------------
 
     .section    .init, "ax"
     .syntax     unified
@@ -12,6 +13,9 @@
     .set        MAIN_STACK_FILL,    0xaaaaaaaa
     .set        PROCESS_STACK_FILL, 0xbbbbbbbb
 
+# -----------------------------------------------------------------------------
+#   @public
+#   reset entry point
 # -----------------------------------------------------------------------------
     .type       reset, function
     .global     reset
